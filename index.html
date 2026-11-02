@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ньютонның бірінші заңы — 9-сынып</title>
+<style>
+:root{--paper:#f3f1ec;--card:#fffdf9;--ink:#1e2430;--muted:#646a73;--line:#d9d4c8;--acc:#e0662f;--acc-d:#b44d1f;--blue:#2563a8;--green:#2e8b57;--red:#c8372d;--frame:#6b4a2b;--board:#1d2a26}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#24262b}
+body{color:var(--ink);font-family:"Segoe UI","Noto Sans",Arial,sans-serif}
+.stage{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;background:var(--paper);overflow:hidden;
+  background-image:linear-gradient(rgba(37,99,168,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,168,.05) 1px,transparent 1px);background-size:22px 22px}
+.top{position:absolute;left:0;right:0;top:0;height:54px;display:flex;align-items:center;gap:12px;padding:0 18px;background:#1e2430;color:#fff}
+.top .lesson{font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.75}
+.top .stitle{font-family:Georgia,"Times New Roman",serif;font-size:20px;font-weight:600;color:#ffcfb4}
+.top .sep{width:1px;height:22px;background:rgba(255,255,255,.3)}
+.top .sp{flex:1}
+.top .tb2{font:inherit;font-size:14.5px;padding:7px 14px;border-radius:4px;border:1px solid #4a505c;background:transparent;color:#eee;cursor:pointer}
+.top .tb2.fs{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.mainw{position:absolute;left:0;right:0;top:54px;bottom:56px;display:flex}
+.leftw{position:relative;width:1060px;flex:none}
+.stage.noboard .leftw{width:100%}
+.stage.noboard .rightw{display:none}
+.slide{position:absolute;left:0;top:0;right:0;bottom:0;padding:14px 22px 10px 26px;display:none;flex-direction:column}
+.slide>*{margin-bottom:10px}
+.slide.on{display:flex}
+h2.st{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:28px;margin:0 0 8px}
+h2.st small{display:block;font:600 12.5px "Segoe UI",Arial,sans-serif;letter-spacing:2.2px;color:var(--acc);text-transform:uppercase;margin-bottom:3px}
+p.lead{font-size:17px;line-height:1.5;margin:0 0 10px;color:#2a3140}
+.def{border-left:6px solid var(--acc);background:linear-gradient(90deg,#fde3d4,#fbf4ec);padding:8px 14px;font:600 17px/1.45 Georgia,serif;border-radius:3px}
+.row{display:flex;align-items:stretch}
+.row>*{margin-right:12px}.row>*:last-child{margin-right:0}
+.grow{flex:1;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:9px 13px}
+.card h3{margin:0 0 5px;font:700 13px "Segoe UI",Arial;text-transform:uppercase;letter-spacing:.7px;color:var(--acc)}
+.card.k h3{color:var(--blue)}
+.big2{font:700 22px Georgia,serif}
+.scn{position:relative}
+canvas.lab{display:block;width:100%;border:1px solid var(--line);border-radius:6px;background:#fff;touch-action:none}
+.ctl{display:flex;align-items:center;flex-wrap:wrap}
+.ctl>*{margin:0 8px 6px 0}
+.btn{font:inherit;font-size:14.5px;padding:7px 14px;cursor:pointer;border-radius:5px;border:1px solid #c8c1b2;background:#fff;color:var(--ink)}
+.btn:hover{border-color:var(--acc)}
+.btn.main{background:var(--acc);border-color:var(--acc-d);color:#fff;font-weight:600}
+.btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.rng{display:flex;align-items:center;font-size:14px;color:var(--muted)}
+.rng input{width:170px;margin:0 8px;accent-color:var(--acc)}
+.rng b{color:var(--ink);font:700 16px Georgia,serif;min-width:70px}
+.ro{font:15px "Segoe UI";color:#333}
+.ro b{font:700 17px Georgia,serif}
+.fdef{opacity:.18;transition:opacity .6s, box-shadow .6s}
+.fdef.on{opacity:1;box-shadow:0 0 0 3px rgba(224,102,47,.35)}
+/* стоп-кадр */
+.frz{position:absolute;left:0;top:0;right:0;bottom:0;display:none;pointer-events:none}
+.frz.on{display:block}
+.frz .tag{position:absolute;left:12px;top:10px;background:var(--red);color:#fff;font:800 15px "Segoe UI",Arial;letter-spacing:2px;padding:5px 12px;transform:rotate(-2deg);box-shadow:0 3px 8px rgba(0,0,0,.25)}
+.fcard{position:absolute;top:10px;right:10px;width:54%;background:rgba(255,255,255,.97);border-radius:9px;border-left:6px solid var(--acc);padding:10px 14px;pointer-events:auto;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+.fcard .qn{font:700 12px "Segoe UI";letter-spacing:1px;color:var(--acc);text-transform:uppercase}
+.fcard .q{font:600 18px/1.4 "Segoe UI",Arial;margin-top:2px}
+.fcard .a{display:none;margin-top:7px;padding-top:7px;border-top:1px dashed #ccc;font-size:16px;line-height:1.45;color:#1f6b3a}
+.frz.rev .fcard .a{display:block}
+.fbt{margin-top:8px}
+.fbt .btn{margin-right:6px;padding:5px 11px;font-size:14px}
+.fcard.n{width:40%}
+.fcard.l{right:auto;left:10px;top:auto;bottom:10px;width:44%}
+.fcard.mini .q,.fcard.mini .a,.fcard.mini .qn{display:none}
+.fcard.mini{width:auto}
+.ans{display:flex;align-items:center;flex-wrap:wrap;font-size:16px}
+.ans>*{margin-right:7px}
+.ans input{font:inherit;font-size:16px;width:90px;padding:4px 8px;border:1px solid #c8c1b2;border-radius:4px}
+.ok{color:var(--green);font-weight:700}.no{color:var(--red);font-weight:700}
+.qa{background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px 13px;cursor:pointer;margin-bottom:8px}
+.qa .x{display:none;color:#1f6b3a;margin-top:6px;font-size:15.5px}
+.qa.open .x{display:block}
+.qa b{color:var(--acc)}
+/* тақта */
+.rightw{flex:1;padding:12px 14px 12px 2px;display:flex}
+.board{flex:1;position:relative;border:9px solid var(--frame);border-radius:6px;display:flex;flex-direction:column;overflow:hidden;
+ box-shadow:inset 0 0 40px rgba(0,0,0,.55),0 8px 20px rgba(0,0,0,.2);background:var(--board)}
+.board::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:#4a321c;pointer-events:none}
+.tools{display:flex;align-items:center;padding:6px 8px;background:rgba(0,0,0,.25);flex-wrap:wrap;position:relative;z-index:2}
+.tools>*{margin-right:5px}
+.sw{width:23px;height:23px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+.sw.on{border-color:#fff}
+.tb{white-space:nowrap;font:inherit;font-size:12.5px;background:rgba(255,255,255,.07);color:#dfe7e2;border:1px solid rgba(255,255,255,.14);border-radius:3px;padding:3px 7px;cursor:pointer}
+.tb.on{background:#e8e3cf;color:#1d2a26}
+.bhint{position:absolute;left:14px;bottom:18px;right:10px;font-family:Georgia,serif;font-style:italic;font-size:13.5px;color:rgba(230,240,232,.28);pointer-events:none}
+#ink{display:block;flex:1;min-height:0;width:100%;margin-bottom:10px;touch-action:none;cursor:crosshair;position:relative;z-index:1}
+.btab{position:absolute;right:0;top:40%;display:none;background:var(--frame);color:#fff;border:none;border-radius:8px 0 0 8px;padding:16px 8px;font:700 15px "Segoe UI";cursor:pointer;z-index:5;writing-mode:vertical-rl}
+.stage.noboard .btab{display:block}
+.bottom{position:absolute;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;padding:0 16px;background:#1e2430}
+.bottom>*{margin-right:7px}
+.bottom .btn{background:transparent;color:#eee;border-color:#4a505c}
+.bottom .btn.main{background:var(--acc);border-color:var(--acc);color:#fff}
+.dot{width:30px;height:30px;border-radius:4px;border:1px solid #4a505c;background:transparent;color:#bbb;font-size:12.5px;cursor:pointer;padding:0;margin-right:3px}
+.dot.on{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
+.cnt{margin-left:auto;color:#cfd3dc;font:15px Georgia,serif}
+.toast{position:absolute;left:50%;top:64px;margin-left:-160px;width:320px;text-align:center;background:#1e2430;color:#fff;padding:10px 14px;border-radius:5px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+/* ===== жаңа слайдтар: 3D, ФС, дуэль, деңгейлер ===== */
+canvas.t3-cv{display:block;width:100%;border:1px solid var(--line);border-radius:6px;background:#e9eef2;touch-action:none;cursor:grab}
+.t3-hud{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:6px;padding:6px 12px;font:14px "Segoe UI",Arial;color:#3a404a;pointer-events:none;max-width:70%}
+.t3-hud b{font:700 16px Georgia,serif;color:var(--ink)}
+.t3-tip{position:absolute;right:12px;top:9px;font:italic 13px Georgia,serif;color:#7a8088;pointer-events:none}
+.fl-sit{font-size:15.5px;line-height:1.48}
+.fl-sit h3{margin-bottom:4px}
+.fl-chips{display:flex;flex-wrap:wrap;margin-top:7px}
+.fl-chips span{background:#f1ece2;border:1px solid var(--line);border-radius:4px;padding:2px 8px;margin:0 6px 5px 0;font:600 13.5px "Segoe UI",Arial}
+.fl-qs{display:flex;flex-wrap:wrap;justify-content:space-between}
+.fl-q{width:49.4%;background:#fff;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:6px;padding:7px 12px;font-size:15px;line-height:1.4;margin-bottom:8px}
+.lv-t .tn,.fl-q .tn{font:700 12px "Segoe UI",Arial;letter-spacing:1px;text-transform:uppercase;color:var(--blue)}
+.ck{display:flex;align-items:center;flex-wrap:wrap;margin-top:5px}
+.ck>*{margin:0 6px 4px 0}
+.ck input{font:inherit;font-size:16px;width:96px;padding:4px 8px;border:1px solid #c8c1b2;border-radius:4px}
+.ck .btn{padding:5px 12px;font-size:14px}
+.ck-r{font-size:14.5px}
+.ck-sol{color:#3a5a40;font-size:14px}
+.btn.ck-ch{text-align:left}
+.btn.ck-right{background:#2e8b57;border-color:#2e8b57;color:#fff}
+.btn.ck-wrong{background:#fbe3e0;border-color:#c8372d;color:#9a2a22;text-decoration:line-through}
+.ck-good{border-left-color:var(--green)!important}.ck-fail{border-left-color:var(--red)!important}
+.lv-bar{display:flex;align-items:center;flex-wrap:wrap}
+.lv-bar>*{margin:0 8px 6px 0}
+.lv-sc{margin-left:auto;font:16px "Segoe UI";color:#333}
+.lv-sc b{font:700 19px Georgia,serif}
+.lv-mk{color:var(--acc)}
+.lv-pane{display:none;flex-wrap:wrap;justify-content:space-between}
+.lv-pane.on{display:flex}
+.lv-t{width:49.4%;background:#fff;border:1px solid var(--line);border-left:5px solid var(--acc);border-radius:6px;padding:8px 12px;font-size:15.5px;line-height:1.4;margin-bottom:9px}
+.lv-t .tq{margin-top:2px}
+.lv-sub{border-top:1px dashed #ddd6c8;margin-top:7px;padding-top:6px;border-left:0!important}
+.lv-note{font:italic 14px Georgia,serif;color:var(--muted)}
+.du-q{background:#1e2430;color:#fff;border-radius:8px;padding:14px 20px;font:600 27px/1.3 Georgia,serif;text-align:center;min-height:104px;display:flex;flex-direction:column;justify-content:center}
+.du-q small{display:block;font:600 13px "Segoe UI",Arial;letter-spacing:2px;color:#ffcfb4;text-transform:uppercase;margin-bottom:4px}
+.du-ar{display:flex;justify-content:space-between}
+.du-p{width:49.3%;border-radius:8px;padding:10px;border:3px solid transparent;transition:background .25s,opacity .25s}
+.du-p1{background:#fbe5dc;border-color:#e0662f}.du-p2{background:#dde8f5;border-color:#2563a8}
+.du-hd{display:flex;align-items:center;justify-content:space-between;font:700 19px "Segoe UI",Arial;margin-bottom:8px}
+.du-hd b{font:700 40px Georgia,serif;min-width:54px;text-align:center;border-radius:6px;background:#fff;padding:0 8px}
+.du-b{display:block;width:100%;min-height:104px;margin-bottom:10px;font:600 23px/1.25 "Segoe UI",Arial;background:#fff;border:2px solid #c8c1b2;border-radius:8px;cursor:pointer;touch-action:none;color:var(--ink);padding:6px 12px}
+.du-b.du-ok{background:#2e8b57;border-color:#2e8b57;color:#fff}
+.du-b.du-no{background:#c8372d;border-color:#c8372d;color:#fff}
+.du-p.du-lock{opacity:.5}
+.du-p.du-win{background:#d4f0dc}
+@keyframes duPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+.du-hd b.pop{animation:duPop .5s}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+ <div class="top"><span class="lesson">Физика · 9-сынып · §13</span><span class="sep"></span><span class="stitle" id="stitle"></span><span class="sp"></span>
+  <button class="tb2" id="bdT">✎ Тақтаны жинау</button><button class="tb2 fs" id="fsTop">⛶ Толық экран</button></div>
+ <div class="mainw">
+  <div class="leftw" id="slides">
+
+<!-- 1 -->
+<section class="slide" data-title="Кіріспе" data-hint="Тақырып, күні...">
+ <h2 class="st" style="font-size:44px;line-height:1.1"><small>Динамика негіздері · §13</small>Ньютонның бірінші заңы.<br>Инерциялық санақ жүйелері</h2>
+ <p class="lead" style="color:var(--muted)">Инерция · инерттілік · Ньютонның І заңы · күштердің теңгерілген әсері</p>
+ <canvas class="lab" id="cTitle" style="height:470px"></canvas>
+ <div style="font-size:14px;color:var(--muted)">«Тайтөбе ауылының ЖОББМ» КММ · мұғалім Төленді И.Н.</div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="Кинематикадан динамикаға" data-hint="Кинематика — ҚАЛАЙ? Динамика — НЕГЕ?">
+ <h2 class="st"><small>Сабақты ашамыз</small>Кинематикадан динамикаға</h2>
+ <div class="row">
+  <div class="card k grow"><h3>Кинематика (өттік)</h3><div class="big2" style="font-size:20px">Дене қозғалысының шамаларын сипаттайды</div><div style="font-size:15px;color:#2a3140;line-height:1.45">Уақыт <b>t</b>, арақашықтық (жол) <b>s</b>, жылдамдық <b>v</b>, үдеу <b>a</b>, траектория — қозғалыстың себебін қарастырмайды.</div></div>
+  <div class="card grow"><h3>Динамика (бастаймыз)</h3><div class="big2" style="font-size:20px">Қозғалыстың себебін зерттейді</div><div style="font-size:15px;color:#2a3140;line-height:1.45">Денеге <b>қандай күш</b> әсер етеді? Сол күштің әсерінен дене қалай қозғалады? (күш <b>F</b>, масса <b>m</b>, Ньютон заңдары)</div></div>
+ </div>
+ <div class="scn" id="bIntro"><canvas class="lab" id="cIntro" style="height:445px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="inGo">▶ Көлікті жүргізу</button><button class="btn" id="inRe">↺ Басынан</button>
+  <button class="btn" id="inBig">📈 Графикті үлкейту</button><span class="ro">«стоп-кадрда» тоқтап, сұрақтарға жауап іздейміз</span></div>
+</section>
+
+
+<!-- 2б: v(t) графигі -->
+<section class="slide" data-title="Кинематика: v(t) графигі және орын ауыстыру" data-hint="s = графиктің астындағы аудан">
+ <h2 class="st"><small>Кинематиканы еске түсірейік</small>Орын ауыстыру — v(t) графигінің астындағы аудан</h2>
+ <canvas class="lab" id="cVt" style="height:470px"></canvas>
+ <div class="ctl"><button class="btn main" id="vtGo">▶ Графикті сызу</button>
+  <button class="btn" data-vs="1">① Үшбұрыш</button><button class="btn" data-vs="2">② Тіктөртбұрыш</button><button class="btn" data-vs="3">③ Үшбұрыш</button><button class="btn" data-vs="4">④ Трапеция</button><button class="btn" id="vtRe">↺</button></div>
+ <div class="card" id="vtTxt" style="font:17px/1.6 Georgia,serif"></div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-title="Аристотель мен Галилей" data-hint="Үйкеліс аз болса — дене алысқа барады...">
+ <h2 class="st"><small>І · Инерция заңы</small>Қозғалыс үшін күш керек пе?</h2>
+ <div class="row">
+  <div class="card grow"><h3>Аристотель</h3><div style="font-size:15.5px;line-height:1.45">«Денеге басқа денелер әсер етпесе, қозғалыс мүмкін емес. Денені қозғалту үшін оған күш түсіру керек.»</div></div>
+  <div class="card k grow"><h3>Галилей</h3><div style="font-size:15.5px;line-height:1.45">«Басқа денелер әсер етпейтін дене тұрақты жылдамдықпен қозғалады немесе тыныштық қалпын сақтайды.»</div></div>
+ </div>
+ <div class="scn" id="bGal"><canvas class="lab" id="cGal" style="height:400px"></canvas></div>
+ <div class="ctl"><span class="ro">Бет:</span><span id="galS"></span><button class="btn main" id="galGo">🏒 Шайбаны итеру</button><button class="btn" id="galRe">↺ Белгілерді өшіру</button></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="Инерттілік. Тиынмен тәжірибе" data-hint="Инерттілік — жылдамдықты сақтау қасиеті...">
+ <h2 class="st"><small>І · Денелердің инерттілігі</small>Тиын неге стақанға түсті?</h2>
+ <div class="row">
+  <div class="def grow" style="font-size:15.5px"><b>Инерттілік</b> — дененің оған әсер етуші сыртқы күштер болмаған немесе олардың әсері теңгерілетін жағдайда бірқалыпты және түзу сызықты қозғалысын немесе тыныштық күйін сақтап қалу қасиеті.</div>
+  <div class="def grow" style="font-size:15.5px;border-left-color:var(--blue);background:linear-gradient(90deg,#dbe7f5,#f2f6fb)"><b>Инерция</b> — денеге басқа денелер әсер етпеген жағдайда дене жылдамдығының сақталуы. Дене лезде тоқтай алмайды немесе жылдамдығын бірден арттыра алмайды.</div>
+ </div>
+ <div class="scn" id="bCoin"><canvas class="lab" id="cCoin" style="height:420px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="coF">👆 Карточканы жылдам шерту</button><button class="btn" id="coS">🐢 Карточканы баяу тарту</button><button class="btn" id="coR">↺ Орнына қою</button></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-title="Масса — инерттілік өлшемі" data-hint="Массасы үлкен дене — инерттірек">
+ <h2 class="st"><small>І · Инерттілік</small>Қай арбаша инерттірек?</h2>
+ <p class="lead">Екі арбашаға <b>бірдей</b> серіппе <b>бірдей</b> уақыт әсер етеді. Арбашалардың массалары әртүрлі. Олардың жылдамдығы қалай өзгереді?</p>
+ <div class="scn" id="bCart"><canvas class="lab" id="cCart" style="height:440px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="caGo">▶ Серіппені босату</button><button class="btn" id="caRe">↺ Басынан</button></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-title="Автобустағы жолаушы" data-hint="Жолаушы инерция бойынша қозғалысын сақтайды...">
+ <h2 class="st"><small>Инерция айналамызда</small>Автобустағы жолаушыға не болады?</h2>
+ <div class="scn" id="bBus"><canvas class="lab" id="cBus" style="height:500px"></canvas></div>
+ <div class="ctl"><button class="btn main" data-bus="brake">🛑 Кілт тежелу</button><button class="btn main" data-bus="acc">🚀 Кілт жылдамдау</button><button class="btn main" data-bus="uni">➡ Бірқалыпты</button><button class="btn main" data-bus="turn">↪ Оңға бұрылу</button></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-title="Ньютонның бірінші заңы" data-hint="F R = 0  ⇔  v = const">
+ <h2 class="st"><small>ІІ · Заң</small>Ньютонның бірінші заңы</h2>
+ <div class="def" style="font-size:17.5px">Денеге басқа денелер әсер етпесе немесе олардың әсері теңгерілсе, инерциялық санақ жүйесіне қатысты дене тыныштық күйін немесе бірқалыпты түзу сызықты қозғалысын сақтайды.</div>
+ <div class="row"><div class="card grow" style="text-align:center"><div class="big2" style="font-style:italic">F<sub>R</sub> = 0 &nbsp;⇔&nbsp; v = const</div></div><div class="card grow" style="font-size:15px;line-height:1.45">Ньютон Галилейдің инерция заңын толықтырып, <b>бірінші заң</b> деп атады және <b>инерциялық санақ жүйесі</b> ұғымын енгізді.</div></div>
+ <div class="scn" id="bSpace"><canvas class="lab" id="cSpace" style="height:400px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="spGo">🚀 Ұшыру</button><button class="btn" id="spRe">↺ Басынан</button><span class="ro" id="spRo"></span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-title="Инерциялық және инерциялық емес санақ жүйелері" data-hint="Жер, бірқалыпты пойыз — инерциялық; үдеумен қозғалатын вагон — инерциялық емес">
+ <h2 class="st" style="font-size:25px"><small>ІІІ · Санақ жүйелері</small>Допты тік жоғары лақтырсақ, ол қайда түседі?</h2>
+ <div class="row">
+  <div class="def grow fdef" id="defIn" style="font-size:15px"><b>Инерция заңы орындалатын санақ жүйесі инерциялық санақ жүйесі</b> деп аталады. Жерге қатысты тұрақты жылдамдықпен қозғалатын жүйелер де (бірқалыпты пойыз, теплоход) — инерциялық.</div>
+  <div class="def grow fdef" id="defNon" style="font-size:15px;border-left-color:var(--red)"><b>Жерге қатысты үдеумен қозғалып келе жатқан денелермен байланысты санақ жүйесі инерциялық емес</b> деп аталады.</div>
+ </div>
+ <div class="scn" id="bTrain"><canvas class="lab" id="cTrain" style="height:440px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="frGo">▶ Тәжірибені бастау</button><button class="btn" id="frRe">↺ Басынан</button><span class="ro" id="trRo"></span></div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-title="Күштердің теңгерілген әсері" data-hint="F R = F тарту + F үйк + F a + N = 0">
+ <h2 class="st"><small>V · Күштердің теңгерілген әсері</small>Автокөлік қашан бірқалыпты қозғалады?</h2>
+ <div class="scn" id="bBal"><canvas class="lab" id="cBal" style="height:450px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="baSc">🎬 Сценарий (3 стоп-кадр)</button>
+  <div class="rng">F<sub>тарту</sub><input type="range" id="baFt" min="0" max="3000" step="100" value="1500"><b id="baFtv"></b></div>
+  <div class="rng">F<sub>үйк</sub><input type="range" id="baFf" min="0" max="3000" step="100" value="1500"><b id="baFfv"></b></div></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-title="Жаттығу 13 · №1 Бүркіт" data-hint="Бүркітке әсер ететін күштер...">
+ <h2 class="st"><small>Жаттығу 13 · №1</small>«Қыран-2018»: бүркітке қандай күштер әсер етеді?</h2>
+ <div class="scn" id="bEag"><canvas class="lab" id="cEag" style="height:520px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="eaGo">▶ Бақылау</button><button class="btn" id="eaRe">↺ Басынан</button><span class="ro">Бүркіт қалықтап ұшып жүр. Стоп-кадрда күштерді бейнелейміз.</span></div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-title="Жаттығу 13 · №2 Шаналар" data-hint="Oy: N = mg;  Ox: F тарту = F үйк = μN">
+ <h2 class="st"><small>Жаттығу 13 · №2</small>Мұз бетіндегі шаналар</h2>
+ <div class="scn" id="bSl"><canvas class="lab" id="cSl" style="height:430px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="slGo">▶ Бақылау</button><button class="btn" id="slRe">↺ Басынан</button></div>
+ <div class="card"><div class="ans">F<sub>тарту</sub> = <input id="slA" placeholder="?"> Н &nbsp; F<sub>үйк</sub> = <input id="slB" placeholder="?"> Н <button class="btn main" id="slC">Тексеру</button><span id="slR"></span></div></div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-title="Жаттығу 13 · №3 Бөрене" data-hint="μF = mg  ⇒  μ = mg / F">
+ <h2 class="st"><small>Жаттығу 13 · №3</small>Қабырғаға тірелген бөрене неге құламайды?</h2>
+ <div class="scn" id="bWl"><canvas class="lab" id="cWl" style="height:430px"></canvas></div>
+ <div class="ctl"><button class="btn main" id="wlGo">▶ Бақылау</button><div class="rng">Қолдың күші F<input type="range" id="wlF" min="0" max="10" step="0.5" value="5"><b id="wlFv"></b></div><span class="ro">μ = 0,8 болғанда күшті азайтып көр!</span></div>
+ <div class="card"><div class="ans">m = 400 г, F = 0,005 кН. &nbsp; Үйкеліс коэффициенті μ = <input id="wlA" placeholder="?"> <button class="btn main" id="wlC">Тексеру</button><span id="wlR"></span></div></div>
+</section>
+
+<!-- 13а: 3D дастарқан -->
+<section class="slide" data-title="3D зертхана: дастарқан фокусы" data-hint="Әсер ету уақыты аз → ыдыс жылдамдық алып үлгермейді">
+ <h2 class="st"><small>Бекіту · 3D зертхана</small>Дастарқанды жұлып алсақ, ыдыстар қайда қалады?</h2>
+ <div class="scn" id="b3d"><canvas class="t3-cv" id="c3d" data-tick="t3" style="height:470px"></canvas><div class="t3-hud" id="t3Hud"></div><div class="t3-tip">↔ Тінтуірмен немесе саусақпен бұрып қараңыз</div></div>
+ <div class="ctl"><button class="btn main" id="t3Go">✋ Дастарқанды тарту</button><button class="btn" id="t3Re">↺ Орнына қою</button>
+  <div class="rng">Тарту үдеуі a<input type="range" id="t3A" min="1" max="40" step="1" value="30"><b id="t3Av"></b></div>
+  <button class="btn on" id="t3Slow">🐢 Баяу көрініс</button><button class="btn fsb">⛶ Толық экран</button></div>
+ <div class="card" id="t3Txt" style="font-size:15.5px;line-height:1.5"></div>
+</section>
+
+<!-- 13б: функционалдық сауаттылық -->
+<section class="slide" data-title="Функционалдық сауаттылық: қауіпсіздік белдігі" data-hint="72 км/сағ = 20 м/с · t = s / v · a = v² / 2s">
+ <h2 class="st"><small>Функционалдық сауаттылық</small>Артқы орындықта белдік керек пе?</h2>
+ <div class="row">
+  <div class="card fl-sit" style="flex:1"><h3>Жағдаят</h3>Әлия отбасымен Тайтөбеден Шымкентке жеңіл көлікпен <b>72 км/сағ</b> жылдамдықпен келе жатыр. Артқы орындықтағы інісі Нұрлан: «Артта отырғанға белдік керек емес қой» — деп, белдігін шешіп қойды. Кенет жолға мал шығып, көлік жол жиегіндегі бетон бөгетке соғылды.
+   <div class="fl-chips"><span>v = 72 км/сағ</span><span>Нұрланнан алдыңғы орындыққа дейін 0,6 м</span><span>Белдік жолаушыны 0,5 м жолда тоқтатады</span><span>Көлік соққыда лезде тоқтады деп аламыз</span></div>
+   <div style="font-size:13.5px;color:var(--muted);margin-top:2px">ДДҰ дерегі: белдік алдыңғы орындықтағы жолаушының қаза болу қаупін 45–50 %-ға, артқы орындықтағының қаза болу мен ауыр жарақат алу қаупін 25 %-ға азайтады.</div></div>
+  <div style="width:500px;flex:none"><canvas class="lab" id="cFl" style="height:300px"></canvas></div>
+ </div>
+ <div class="ctl"><button class="btn main" id="flGo">▶ Соққыны баяу көрсету</button><button class="btn" id="flRe">↺ Басынан</button><span class="ro" id="flSc"></span><button class="btn fsb">⛶ Толық экран</button></div>
+ <div class="fl-qs" id="flQs"></div>
+</section>
+
+<!-- 13в: дуэль -->
+<section class="slide" data-title="Сергіту сәті: Инерция дуэлі" data-hint="Кім бірінші дұрыс басады?">
+ <h2 class="st"><small>Сергіту сәті · ойын</small>Инерция дуэлі <span style="font:15px 'Segoe UI';color:var(--muted)">— тақтаға екі оқушы шығады, кім бірінші дұрыс басса, сол ұпай алады</span></h2>
+ <div class="du-q" id="duQ"><small>10 сұрақ</small>«▶ Бастау» батырмасын басыңыз</div>
+ <div class="du-ar">
+  <div class="du-p du-p1" id="duP1"><div class="du-hd"><span>1-ойыншы</span><b id="duS1">0</b></div><div class="du-op"></div></div>
+  <div class="du-p du-p2" id="duP2"><div class="du-hd"><span>2-ойыншы</span><b id="duS2">0</b></div><div class="du-op"></div></div>
+ </div>
+ <div class="ctl"><button class="btn main" id="duGo">▶ Бастау</button><button class="btn" id="duNx">⏭ Келесі сұрақ</button><span class="ro">Қате басқан ойыншы осы сұрақта бұғатталады.</span><button class="btn fsb">⛶ Толық экран</button></div>
+</section>
+
+<!-- 13г: деңгейлік тапсырмалар -->
+<section class="slide" data-title="Деңгейлік тапсырмалар" data-hint="A — 4×1, B — 4×2, C — 2×4 = 20 балл">
+ <h2 class="st"><small>Бағалау · 20 балл</small>Деңгейлік тапсырмалар</h2>
+ <div class="lv-bar"><button class="btn lv-tab on" data-lv="A">A деңгей · 4 балл</button><button class="btn lv-tab" data-lv="B">B деңгей · 8 балл</button><button class="btn lv-tab" data-lv="C">C деңгей · 8 балл</button>
+  <span class="lv-sc" id="lvSc"></span><button class="btn" id="lvRe">↺ Қайта бастау</button><button class="btn fsb">⛶ Толық экран</button></div>
+ <div class="lv-pane on" id="lvA"></div><div class="lv-pane" id="lvB"></div><div class="lv-pane" id="lvC"></div>
+ <div class="lv-note">Әр жауапқа 2 мүмкіндік беріледі. g = 10 Н/кг. Бөлшекті үтірмен жазыңыз: 0,02. Баға: 18–20 балл «5», 14–17 «4», 9–13 «3».</div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-title="Қорытынды және үй тапсырмасы" data-hint="Бүгін не білдім?">
+ <h2 class="st"><small>Қорытынды</small>Жауабы қандай? <span style="font:15px Segoe UI;color:var(--muted)">(жауапты көру үшін басыңыз)</span></h2>
+ <div class="qa"><b>1.</b> Неліктен аспан денелері үнемі қозғалыста болады?<div class="x">Ғарышта оларды тежейтін үйкеліс, ауа кедергісі жоқ. Олар инерция бойынша қозғалысын сақтайды, ал тартылыс күші тек бағытын өзгертеді.</div></div>
+ <div class="qa"><b>2.</b> Не себепті жеңіл атлет эстафетаны тапсырғаннан кейін жүгіруді жалғастырады?<div class="x">Инерция бойынша: дене лезде тоқтай алмайды. Сонымен қатар таяқшаны алатын жүгіруші де алдын ала жылдамдық алады — екеуінің жылдамдығы теңеседі.</div></div>
+ <div class="qa"><b>3.</b> Неліктен Жермен байланысты санақ жүйесін ғарышқа ұшу есептеулерінде қолдануға болмайды?<div class="x">Жер өз осінен айналады және Күнді айналады — ол үдеумен қозғалады. Аз уақыттағы қозғалыстарда бұл ескерілмейді, ал ұзақ ғарыштық ұшуларда Жер жүйесі инерциялық емес болып шығады.</div></div>
+ <div class="qa"><b>4.</b> Инерциялық қозғалысқа және тыныштық инерциясына мысал келтіріңдер.<div class="x">Мысалы: мұз бетімен сырғанаған шайба; тежелген автобустағы жолаушы; дастарқанды жылдам тартқанда ыдыстардың орнында қалуы; тиын тәжірибесі.</div></div>
+ <div class="card"><h3>Үй тапсырмасы</h3><div style="font-size:16px;line-height:1.6">§13 оқу, Ньютонның І заңын және инерциялық санақ жүйесінің анықтамасын жаттау. Жаттығу 13 (№1–3) дәптерге толық шығару. <b>Тәжірибе:</b> үйде тиын мен карточка тәжірибесін жасап, видеоға түсіріп келу.</div></div>
+</section>
+
+  </div>
+  <div class="rightw"><div class="board">
+   <div class="tools"><button class="sw on" data-c="#f2efe2" style="background:#f2efe2"></button><button class="sw" data-c="#ffd75e" style="background:#ffd75e"></button><button class="sw" data-c="#ff8fa3" style="background:#ff8fa3"></button><button class="sw" data-c="#7fd8ff" style="background:#7fd8ff"></button>
+    <button class="tb" data-w="2.4">жіңішке</button><button class="tb on" data-w="3.8">орташа</button><button class="tb" id="erase">⌫</button><button class="tb" id="undo">↶</button><button class="tb" id="wipe">тазалау</button><button class="tb" id="bdClose">⟩ жинау</button></div>
+   <div class="bhint" id="bhint"></div><canvas id="ink"></canvas></div></div>
+  <button class="btab" id="bdOpen">✎ Тақта</button>
+ </div>
+ <div class="bottom"><button class="btn" id="prev">◀ Артқа</button><span id="dots"></span><button class="btn main" id="next">Келесі ▶</button><span class="cnt" id="cnt"></span><button class="btn" id="snd">🔊</button><button class="btn" id="fs">⛶ Толық экран</button></div>
+ <div class="toast" id="toast"></div>
+</div>
+
+<script src="three.min.js"></script>
+<script>
+var $=function(id){return document.getElementById(id);};
+function each(l,f){Array.prototype.forEach.call(l,f);}
+function matches(el,s){var f=el.matches||el.webkitMatchesSelector||el.msMatchesSelector;return f.call(el,s);}
+function closest(el,s){while(el&&el.nodeType===1){if(matches(el,s))return el;el=el.parentNode;}return null;}
+function fx(v,d){if(d===undefined)d=1;return (Math.round(v*Math.pow(10,d))/Math.pow(10,d)).toFixed(d).replace('.',',');}
+function mod(a,b){return ((a%b)+b)%b;}
+function clamp(v,a,b){return v<a?a:v>b?b:v;}
+function parseNum(s){s=String(s).trim().replace(/\s/g,'').replace(',','.');return s===''?NaN:Number(s);}
+var toastT;function toast(m){var t=$('toast');t.textContent=m;t.className='toast show';clearTimeout(toastT);toastT=setTimeout(function(){t.className='toast';},2300);}
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+var SND=(function(){var ac=null,on=store.get('n1_snd',true);
+ function init(){if(ac){if(ac.state==='suspended')ac.resume();return;}var C=window.AudioContext||window.webkitAudioContext;if(C)ac=new C();}
+ function tone(f,d,v,at,ty){if(!ac||!on)return;v=v||.14;at=at||0;var t=ac.currentTime+at,o=ac.createOscillator(),g=ac.createGain();o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d+.02);}
+ return{init:init,isOn:function(){return on;},toggle:function(){on=!on;store.set('n1_snd',on);return on;},
+  ok:function(){tone(660,.14);tone(990,.25,.14,.11);},bad:function(){tone(190,.3,.08,0,'square');},tick:function(){tone(1300,.05,.05);},page:function(){tone(520,.07,.04);},
+  stop:function(){tone(880,.09,.12,0,'square');tone(440,.18,.1,.08,'square');}};})();
+document.addEventListener('mousedown',function(){SND.init();},true);document.addEventListener('touchstart',function(){SND.init();},true);
+
+/* ===== стоп-кадр ===== */
+function Freezer(boxId){var box=$(boxId),d=document.createElement('div'),self=this;d.className='frz';
+ d.innerHTML='<div class="tag"></div><div class="fcard"><div class="qn"></div><div class="q"></div><div class="a"></div><div class="fbt"><button class="btn rv">💡 Жауапты ашу</button><button class="btn main go">▶ Жалғастыру</button><button class="btn mn" title="Кішірейту">▁</button></div></div>';
+ box.appendChild(d);this.d=d;
+ d.querySelector('.rv').onclick=function(){d.classList.add('rev');if(self.onRev)self.onRev();SND.tick();};
+ d.querySelector('.go').onclick=function(){self.hide();var f=self.onGo;self.onGo=null;if(f)f();};
+ d.querySelector('.mn').onclick=function(){d.querySelector('.fcard').classList.toggle('mini');};}
+Freezer.prototype.show=function(o){var d=this.d;d.querySelector('.tag').textContent=o.tag||'⏸ СТОП-КАДР';d.querySelector('.qn').textContent=o.num||'';d.querySelector('.q').innerHTML=o.q;
+ d.querySelector('.a').innerHTML=o.a||'';d.querySelector('.rv').style.display=o.a?'':'none';d.querySelector('.go').textContent=o.go||'▶ Жалғастыру';
+ d.classList.remove('rev');d.querySelector('.fcard').classList.remove('mini');d.querySelector('.fcard').classList.toggle('l',o.side==='l');d.querySelector('.fcard').classList.toggle('n',o.side==='n');d.classList.add('on');this.onRev=o.onRev;this.onGo=o.onGo;SND.stop();};
+Freezer.prototype.hide=function(){this.d.classList.remove('on');};
+Freezer.prototype.isOn=function(){return this.d.classList.contains('on');};
+
+/* ===== сурет көмекшілері ===== */
+var INK='#1e2430';
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function txt(c,t,x,y,col,size,align,wt,font){c.fillStyle=col||INK;c.font=(wt||'')+' '+(size||14)+'px '+(font||'"Segoe UI",Arial,sans-serif');c.textAlign=align||'left';c.fillText(t,x,y);c.textAlign='left';}
+function arw(c,x0,y0,x1,y1,col,w){w=w||3;var a=Math.atan2(y1-y0,x1-x0),L=Math.sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)),hs=Math.min(L*.6,6+w*2.2);c.strokeStyle=col;c.fillStyle=col;c.lineWidth=w;c.lineCap='round';
+ c.beginPath();c.moveTo(x0,y0);c.lineTo(x1-Math.cos(a)*hs*.6,y1-Math.sin(a)*hs*.6);c.stroke();c.beginPath();c.moveTo(x1,y1);c.lineTo(x1-hs*Math.cos(a-.42),y1-hs*Math.sin(a-.42));c.lineTo(x1-hs*Math.cos(a+.42),y1-hs*Math.sin(a+.42));c.closePath();c.fill();}
+function flab(c,main,sub,x,y,col){c.fillStyle=col;c.font='italic 700 19px Georgia,serif';var w1=c.measureText(main).width;c.font='600 12.5px "Segoe UI",Arial';var w2=sub?c.measureText(sub).width:0;var x0=x-(w1+w2)/2;
+ c.fillStyle=FLBG;c.fillRect(x0-3,y-17,w1+w2+6,23);c.fillStyle=col;c.font='italic 700 19px Georgia,serif';c.fillText(main,x0,y);if(sub){c.font='600 12.5px "Segoe UI",Arial';c.fillText(sub,x0+w1+1,y+4);}}
+function force(c,x,y,dx,dy,col,main,sub){if(Math.abs(dx)+Math.abs(dy)<3)return;arw(c,x,y,x+dx,y+dy,col,4);var L=Math.sqrt(dx*dx+dy*dy);flab(c,main,sub,x+dx+dx/L*22,y+dy+dy/L*20+6,col);}
+var FLBG='rgba(255,255,255,.75)';var FC={t:'#2e8b57',f:'#c8372d',g:'#2563a8',n:'#6b5fb0',r:'#e0662f'};
+function car(c,x,y,s,col,rot){c.save();c.translate(x,y);c.fillStyle='rgba(0,0,0,.18)';c.beginPath();c.ellipse(0,1,36*s,4*s,0,0,6.3);c.fill();
+ c.fillStyle=col;rr(c,-34*s,-22*s,68*s,14*s,5*s);c.fill();c.beginPath();c.moveTo(-20*s,-21*s);c.lineTo(-11*s,-33*s);c.lineTo(11*s,-33*s);c.lineTo(22*s,-21*s);c.closePath();c.fill();
+ c.fillStyle='#cfe8f7';c.beginPath();c.moveTo(-16*s,-22*s);c.lineTo(-9.5*s,-30.5*s);c.lineTo(-1*s,-30.5*s);c.lineTo(-1*s,-22*s);c.closePath();c.fill();c.beginPath();c.moveTo(2*s,-22*s);c.lineTo(2*s,-30.5*s);c.lineTo(10*s,-30.5*s);c.lineTo(18*s,-22*s);c.closePath();c.fill();
+ c.fillStyle='#ffe28a';c.fillRect(30*s,-19*s,4*s,4*s);c.fillStyle='#e05a4a';c.fillRect(-34*s,-19*s,3*s,4*s);
+ for(var k=0;k<2;k++){var wx=k?20*s:-20*s;c.fillStyle='#222';c.beginPath();c.arc(wx,-7*s,7.5*s,0,6.3);c.fill();c.fillStyle='#aaa';c.beginPath();c.arc(wx,-7*s,3.6*s,0,6.3);c.fill();
+  c.strokeStyle='#555';c.lineWidth=1.2*s;for(var j=0;j<3;j++){var a=rot+j*2.09;c.beginPath();c.moveTo(wx,-7*s);c.lineTo(wx+Math.cos(a)*3.6*s,-7*s+Math.sin(a)*3.6*s);c.stroke();}}
+ c.restore();}
+function tree(c,x,y,s){c.fillStyle='#7a5a3a';c.fillRect(x-3*s,y-26*s,6*s,26*s);c.fillStyle='#4f9a56';c.beginPath();c.arc(x,y-34*s,15*s,0,6.3);c.arc(x-9*s,y-26*s,11*s,0,6.3);c.arc(x+9*s,y-26*s,11*s,0,6.3);c.fill();}
+function roadScene(c,w,h,off,gy){var g=c.createLinearGradient(0,0,0,gy);g.addColorStop(0,'#bcdcf2');g.addColorStop(1,'#eef6fb');c.fillStyle=g;c.fillRect(0,0,w,gy);
+ c.fillStyle='#bcd7a0';c.beginPath();c.moveTo(0,gy);for(var x=0;x<=w+20;x+=20){var u=x+off*.25;c.lineTo(x,gy-55-16*Math.sin(u/90)-9*Math.sin(u/37));}c.lineTo(w,gy);c.closePath();c.fill();
+ for(var i=0;i<Math.ceil(w/170)+2;i++){var tx=mod(i*170-off*.8,Math.ceil(w/170+2)*170)-90;tree(c,tx,gy-2,1);}
+ c.fillStyle='#3b3f45';c.fillRect(0,gy,w,64);c.fillStyle='#e9e9e9';c.fillRect(0,gy+3,w,2);c.fillRect(0,gy+59,w,2);c.fillStyle='#f2c230';for(var x2=-mod(off,44);x2<w;x2+=44)c.fillRect(x2,gy+31,24,3);
+ c.fillStyle='#9cc27e';c.fillRect(0,gy+64,w,h-gy-64);}
+function filmFrame(c,w,h){c.strokeStyle='rgba(200,55,45,.85)';c.lineWidth=5;var L=36;[[8,8,1,1],[w-8,8,-1,1],[8,h-8,1,-1],[w-8,h-8,-1,-1]].forEach(function(p){c.beginPath();c.moveTo(p[0],p[1]+L*p[3]);c.lineTo(p[0],p[1]);c.lineTo(p[0]+L*p[2],p[1]);c.stroke();});}
+function qbubble(c,x,y,t){c.fillStyle='#fff';c.strokeStyle=INK;c.lineWidth=2;rr(c,x-70,y-44,140,40,12);c.fill();c.stroke();c.beginPath();c.moveTo(x-8,y-5);c.lineTo(x,y+10);c.lineTo(x+8,y-5);c.fill();txt(c,t||'? ? ?',x,y-17,'#e0662f',20,'center','800');}
+function panel(c,x,y,w,h){c.fillStyle='rgba(255,255,255,.92)';rr(c,x,y,w,h,8);c.fill();c.strokeStyle='#d9d4c8';c.lineWidth=1;c.stroke();}
+function person(c,x,y,hh,ang,col,armUp){c.save();c.translate(x,y);c.rotate(ang);c.strokeStyle=col||INK;c.lineWidth=hh*.075;c.lineCap='round';
+ c.beginPath();c.moveTo(-hh*.1,0);c.lineTo(0,-hh*.45);c.lineTo(hh*.1,0);c.moveTo(0,-hh*.45);c.lineTo(0,-hh*.82);c.moveTo(0,-hh*.75);c.lineTo(armUp?hh*.12:hh*.18,armUp?-hh*1.02:-hh*.5);c.stroke();
+ c.fillStyle=col||INK;c.beginPath();c.arc(0,-hh*.92,hh*.1,0,6.3);c.fill();c.restore();}
+var LAB={},TT=0;
+
+/* ===== 1. Титул ===== */
+var TL={x:0};
+LAB.cTitle=function(c,w,h,dt){TL.x+=dt*14;var gy=h*.62;roadScene(c,w,h,TL.x*12,gy);car(c,w*.33,gy+48,1.8,'#2563a8',TL.x*1.1);
+ panel(c,w*.55,40,w*.4,150);txt(c,'ДИНАМИКА',w*.75,95,'#e0662f',40,'center','800',"Georgia,serif");txt(c,'қозғалыстың СЕБЕБІН зерттейді',w*.75,130,INK,19,'center');txt(c,'F = ?',w*.75,170,'#2563a8',26,'center','700',"Georgia,serif");};
+
+/* ===== 2. Кинематикадан динамикаға ===== */
+var FZ={};
+var IN={t:0,run:false,paused:false,reveal:false,x:0,done:{},hist:[[0,0]],mode:'',end:false};
+var INC=[{t:2.5,m:'acc',q:'Көлік орнынан қозғалды, жылдамдығы артып келеді. <b>Оған қандай күш әсер етіп тұр? Неге жылдамдығы артады?</b>',a:'Қозғалтқыштың <b>тарту күші</b> үйкеліс күшінен үлкен: F<sub>тарту</sub> &gt; F<sub>үйк</sub>. Тең әсерлі күш F<sub>R</sub> алға бағытталған — көлік <b>үдемелі</b> қозғалады.'},
+ {t:6.5,m:'const',q:'Қозғалтқыш жұмыс істеп тұр, бірақ спидометр өзгермейді: v = 20 м/с. <b>Неге жылдамдық артпайды?</b>',a:'Тарту күші үйкеліс пен ауа кедергісін <b>теңгереді</b>: F<sub>тарту</sub> = F<sub>үйк</sub>. Тең әсерлі күш F<sub>R</sub> = 0 — көлік <b>бірқалыпты</b> қозғалады. Бұл — Ньютонның І заңы!'},
+ {t:10.5,m:'brake',q:'Жүргізуші тежегішті басты. <b>Енді көлікке қандай күш әсер етеді? Ол қалай қозғалады?</b>',a:'Тарту күші жоқ, ал <b>тежеу (үйкеліс) күші</b> қозғалысқа қарсы бағытталған. F<sub>R</sub> артқа бағытталған — көлік <b>кемімелі</b> қозғалып, тоқтайды.'}];
+function inV(t){return t<4?5*t:t<9?20:t<13?20-5*(t-9):0;}
+function inA(t){return t<4?5:t<9?0:t<13?-5:0;}
+function inPh(t){return t<=0?'Тыныштық':t<4?'Үдемелі қозғалыс':t<9?'Бірқалыпты қозғалыс':t<13?'Кемімелі қозғалыс':'Тыныштық';}
+function inReset(){IN.t=0;IN.x=0;IN.done={};IN.hist=[[0,0]];IN.run=false;IN.paused=false;IN.reveal=false;IN.end=false;FZ.intro.hide();$('inGo').textContent='▶ Көлікті жүргізу';}
+LAB.cIntro=function(c,w,h,dt){
+ if(IN.run&&!IN.paused){var tn=IN.t+dt,cue=null;for(var i=0;i<INC.length;i++){if(!IN.done[i]&&IN.t<INC[i].t&&tn>=INC[i].t){tn=INC[i].t;IN.done[i]=1;cue=i;break;}}
+  var n=Math.max(1,Math.ceil((tn-IN.t)/.01)),d=(tn-IN.t)/n;for(var k=0;k<n;k++){IN.x+=inV(IN.t)*d;IN.t+=d;}
+  if(IN.t-IN.hist[IN.hist.length-1][0]>.08)IN.hist.push([IN.t,inV(IN.t)]);
+  if(cue!==null){IN.paused=true;IN.mode=INC[cue].m;IN.reveal=false;FZ.intro.show({num:'Сұрақ '+(cue+1)+' / 3',q:INC[cue].q,a:INC[cue].a,onRev:function(){IN.reveal=true;},onGo:function(){IN.paused=false;IN.reveal=false;}});}
+  if(IN.t>=14.5){IN.run=false;IN.end=true;$('inGo').textContent='▶ Қайта көру';
+   FZ.intro.show({tag:'ҚОРЫТЫНДЫ',num:'Кинематика → Динамика',q:'Кинематика бізге көліктің <b>ҚАЛАЙ</b> қозғалғанын айтты: v, a, s. Ал <b>НЕГЕ</b> бірде үдеп, бірде бірқалыпты, бірде тежеліп қозғалды?',a:'Мұның жауабын <b>ДИНАМИКА</b> береді: жылдамдықтың өзгеру себебі — <b>күш</b>. Күштер теңгерілсе, жылдамдық өзгермейді. Бүгін динамиканың бірінші заңын — <b>Ньютонның І заңын</b> үйренеміз.',go:'✓ Жабу'});}}
+ var gy=h*.58;roadScene(c,w,h,IN.x*12,gy);var cx=w*.3,base=gy+50;car(c,cx,base,1.7,'#2563a8',IN.x*12/12.7);
+ panel(c,14,h-118,230,104);txt(c,'t = '+fx(IN.t,1)+' с',28,h-90,INK,17,'left','700');txt(c,'v = '+fx(inV(IN.t),1)+' м/с',28,h-64,'#2563a8',20,'left','700',"Georgia,serif");
+ txt(c,'a = '+fx(IN.run||IN.paused?inA(IN.t):0,0)+' м/с²',150,h-90,'#e0662f',17,'left','700',"Georgia,serif");txt(c,inPh(IN.t),28,h-30,'#646a73',15,'left','600');
+ var gx=w-300,gyy=h-150,gw=280,gh=136;panel(c,gx,gyy,gw,gh);var X=function(t){return gx+30+(gw-44)*t/15;},Y=function(v){return gyy+gh-22-(gh-36)*v/25;};
+ c.fillStyle='rgba(46,139,87,.12)';c.fillRect(X(0),gyy+8,X(4)-X(0),gh-30);c.fillStyle='rgba(37,99,168,.08)';c.fillRect(X(4),gyy+8,X(9)-X(4),gh-30);c.fillStyle='rgba(200,55,45,.1)';c.fillRect(X(9),gyy+8,X(13)-X(9),gh-30);
+ c.strokeStyle=INK;c.lineWidth=1.2;c.beginPath();c.moveTo(X(0),gyy+8);c.lineTo(X(0),Y(0));c.lineTo(X(15),Y(0));c.stroke();txt(c,'v, м/с',gx+6,gyy+18,INK,11,'left','700');txt(c,'t, с',gx+gw-26,gyy+gh-6,INK,11,'left','700');
+ c.strokeStyle='#e0662f';c.lineWidth=2.5;c.beginPath();for(var i2=0;i2<IN.hist.length;i2++){var p=IN.hist[i2];if(i2)c.lineTo(X(p[0]),Y(p[1]));else c.moveTo(X(p[0]),Y(p[1]));}c.lineTo(X(IN.t),Y(inV(IN.t)));c.stroke();
+ if(IN.paused){filmFrame(c,w,h);var fy=base-27;
+  if(!IN.reveal)qbubble(c,cx,base-70,'F = ?');
+  else{force(c,cx,fy,0,62,FC.g,'m','g');force(c,cx,fy,0,-62,FC.n,'N','');
+   if(IN.mode==='acc'){force(c,cx+30,fy,110,0,FC.t,'F','тарту');force(c,cx-30,fy,-50,0,FC.f,'F','үйк');force(c,cx-30,base+30,60,0,FC.r,'F','R');}
+   if(IN.mode==='const'){force(c,cx+30,fy,85,0,FC.t,'F','тарту');force(c,cx-30,fy,-85,0,FC.f,'F','үйк');flab(c,'F','R = 0',cx,base+38,FC.r);}
+   if(IN.mode==='brake'){force(c,cx-30,fy,-105,0,FC.f,'F','тежеу');force(c,cx+30,base+30,-60,0,FC.r,'F','R');}}}};
+$('inGo').onclick=function(){if(IN.end)inReset();if(IN.paused)return;IN.run=!IN.run;$('inGo').textContent=IN.run?'⏸ Үзіліс':'▶ Жалғастыру';};
+$('inRe').onclick=inReset;
+
+/* ===== 2б. v(t) графигі және аудандар ===== */
+var VT={t:0,play:false,step:0};
+function vtS(t){return t<4?2.5*t*t:t<9?40+20*(t-4):t<13?140+20*(t-9)-2.5*(t-9)*(t-9):180;}
+var FRH=function(a,b){return '<span style="display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px"><span style="border-bottom:1.5px solid">'+a+'</span><span>'+b+'</span></span>';};
+var VTX=['Көлік <b>4 с</b> үдеп, <b>5 с</b> бірқалыпты жүріп, <b>4 с</b> тежелді. «▶ Графикті сызу» басылғанда графиктің астындағы <b>аудан</b> көліктің жүрген жолымен бірге өседі.',
+ '<b>①</b> Үдемелі бөлік — <b>тікбұрышты үшбұрыш</b>: S₁ = '+FRH('1','2')+'·a·b = '+FRH('1','2')+'· 4 с · 20 м/с = <b style="color:#2e8b57">40 м</b>',
+ '<b>②</b> Бірқалыпты бөлік — <b>тіктөртбұрыш</b>: S₂ = a·b = 5 с · 20 м/с = <b style="color:#2563a8">100 м</b>',
+ '<b>③</b> Кемімелі бөлік — <b>тікбұрышты үшбұрыш</b>: S₃ = '+FRH('1','2')+'· 4 с · 20 м/с = <b style="color:#c8372d">40 м</b> &nbsp;⇒&nbsp; S = 40 + 100 + 40 = <b>180 м</b>',
+ '<b>④</b> Бүкіл фигура — <b>трапеция</b>: S = '+FRH('a + b','2')+'·h = '+FRH('13 с + 5 с','2')+'· 20 м/с = <b style="color:#e0662f">180 м</b> — нәтиже бірдей! &nbsp;<b>Орын ауыстыру = v(t) графигінің астындағы аудан.</b>'];
+function vtTxt(){$('vtTxt').innerHTML=VTX[VT.step];each(document.querySelectorAll('[data-vs]'),function(b){b.classList.toggle('on',+b.getAttribute('data-vs')===VT.step);});}
+$('vtGo').onclick=function(){VT.t=0;VT.play=true;VT.step=0;vtTxt();SND.tick();};
+$('vtRe').onclick=function(){VT.t=0;VT.play=false;VT.step=0;vtTxt();};
+each(document.querySelectorAll('[data-vs]'),function(b){b.onclick=function(){VT.step=+b.getAttribute('data-vs');VT.t=14;VT.play=false;vtTxt();SND.tick();};});
+vtTxt();
+$('inBig').onclick=function(){var i=0;each(slides,function(s,j){if(s.querySelector('#cVt'))i=j;});go(i);};
+function poly(c,pts,fill,stroke){c.beginPath();for(var i=0;i<pts.length;i++){if(i)c.lineTo(pts[i][0],pts[i][1]);else c.moveTo(pts[i][0],pts[i][1]);}c.closePath();if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=2;c.stroke();}}
+function dim(c,x0,y0,x1,y1,col,lab,lx,ly,al){arw(c,x0,y0,x1,y1,col,2);arw(c,x1,y1,x0,y0,col,2);txt(c,lab,lx,ly,col,15,al||'center','700');}
+LAB.cVt=function(c,w,h,dt){if(VT.play){VT.t=Math.min(14,VT.t+dt*1.3);if(VT.t>=14)VT.play=false;}
+ c.fillStyle='#fff';c.fillRect(0,0,w,h);
+ var tL=150,tR=w-50,ty=40,sc=function(m){return tL+(tR-tL)*m/180;};c.fillStyle='#3b3f45';c.fillRect(tL-10,ty-6,tR-tL+20,22);c.fillStyle='#f2c230';for(var m=0;m<180;m+=12)c.fillRect(sc(m),ty+4,6,2);
+ for(m=0;m<=180;m+=20){c.fillStyle='#646a73';c.fillRect(sc(m)-1,ty+16,2,6);txt(c,m+' м',sc(m),ty+34,'#646a73',11,'center');}
+ car(c,sc(vtS(VT.t)),ty+12,.7,'#2563a8',VT.t*5);txt(c,'s = '+fx(vtS(VT.t),0)+' м',16,ty+12,'#e0662f',18,'left','700',"Georgia,serif");
+ var L=80,R=w-110,T=96,B=h-44,X=function(t){return L+(R-L)*t/14;},Y=function(v){return B-(B-T)*v/25;};
+ c.strokeStyle='#eee8dc';c.lineWidth=1;for(var t=0;t<=14;t++){c.beginPath();c.moveTo(X(t),T);c.lineTo(X(t),B);c.stroke();txt(c,String(t),X(t),B+18,'#646a73',13,'center');}
+ for(var v=0;v<=25;v+=5){c.beginPath();c.moveTo(L,Y(v));c.lineTo(R,Y(v));c.stroke();txt(c,String(v),L-10,Y(v)+5,'#646a73',13,'right');}
+ c.strokeStyle=INK;c.lineWidth=2;c.beginPath();c.moveTo(L,T-14);c.lineTo(L,B);c.lineTo(R+14,B);c.stroke();
+ txt(c,'v, м/с',L,T-20,INK,15,'center','700');txt(c,'t, с',R+14,B-8,INK,15,'right','700');
+ var st=VT.step;
+ if(st===0&&VT.t>0){var pts=[[X(0),Y(0)]];for(var q=0;q<=VT.t;q+=.05)pts.push([X(q),Y(inV(q))]);pts.push([X(VT.t),Y(inV(VT.t))]);pts.push([X(VT.t),Y(0)]);poly(c,pts,'rgba(224,102,47,.22)');}
+ if(st>=1&&st<4)poly(c,[[X(0),Y(0)],[X(4),Y(20)],[X(4),Y(0)]],'rgba(46,139,87,.3)','#2e8b57');
+ if(st>=2&&st<4)poly(c,[[X(4),Y(0)],[X(4),Y(20)],[X(9),Y(20)],[X(9),Y(0)]],'rgba(37,99,168,.22)','#2563a8');
+ if(st>=3&&st<4)poly(c,[[X(9),Y(0)],[X(9),Y(20)],[X(13),Y(0)]],'rgba(200,55,45,.25)','#c8372d');
+ if(st>=1&&st<4){txt(c,'S₁ = 40 м',X(2.9),Y(5),'#1f6b3a',19,'center','800',"Georgia,serif");dim(c,X(0),Y(0)+26,X(4),Y(0)+26,'#1f6b3a','a = 4 с',X(2),Y(0)+42);dim(c,X(4)-12,Y(0),X(4)-12,Y(20),'#1f6b3a',st===1?'b = 20 м/с':'',X(4)+8,Y(12),'left');}
+ if(st>=2&&st<4){txt(c,'S₂ = 100 м',X(6.5),Y(9),'#174a85',22,'center','800',"Georgia,serif");dim(c,X(4),Y(20)-16,X(9),Y(20)-16,'#174a85','5 с',X(6.5),Y(20)-24);}
+ if(st>=3&&st<4){txt(c,'S₃ = 40 м',X(10.1),Y(5),'#9d2a20',19,'center','800',"Georgia,serif");dim(c,X(9),Y(0)+26,X(13),Y(0)+26,'#9d2a20','4 с',X(11),Y(0)+42);}
+ if(st>=4){poly(c,[[X(0),Y(0)],[X(4),Y(20)],[X(9),Y(20)],[X(13),Y(0)]],'rgba(224,102,47,.25)','#e0662f');
+  dim(c,X(4),Y(20)-16,X(9),Y(20)-16,'#2563a8','b = 5 с',X(6.5),Y(20)-24);dim(c,X(0),Y(0)+26,X(13),Y(0)+26,INK,'a = 13 с',X(6.5),Y(0)+42);
+  dim(c,X(13.4),Y(0),X(13.4),Y(20),'#b44d1f','h = 20 м/с',X(13.4)+8,Y(10),'left');
+  txt(c,'S = (a + b)/2 · h = 180 м',X(6.5),Y(9),'#b44d1f',26,'center','800',"Georgia,serif");}
+ var tE=st>0?14:VT.t;c.strokeStyle='#e0662f';c.lineWidth=4;c.lineJoin='round';c.beginPath();for(var q2=0;q2<=tE+1e-9;q2+=.05){var px=X(q2),py=Y(inV(q2));if(q2)c.lineTo(px,py);else c.moveTo(px,py);}c.stroke();
+ if(st===0&&VT.t>0){c.strokeStyle='rgba(30,36,48,.5)';c.lineWidth=1.5;c.beginPath();c.moveTo(X(VT.t),T);c.lineTo(X(VT.t),B);c.stroke();var bx=Math.min(X(VT.t)+8,R-150);panel(c,bx,T+24,150,48);txt(c,'t = '+fx(VT.t,1)+' с',bx+10,T+44,INK,14,'left','700');txt(c,'аудан = '+fx(vtS(VT.t),0)+' м',bx+10,T+64,'#e0662f',14,'left','700');}
+ txt(c,'үдемелі',X(2),T+8,'#2e8b57',13,'center','700');txt(c,'бірқалыпты',X(6.5),T+8,'#2563a8',13,'center','700');txt(c,'кемімелі',X(11),T+8,'#c8372d',13,'center','700');};
+/* ===== 3. Галилей ===== */
+var SURF=[{n:'Құм',mu:.6,c:'#e3c98f'},{n:'Шөп',mu:.3,c:'#8cbf6a'},{n:'Тақтай',mu:.15,c:'#c49a6c'},{n:'Мұз',mu:.05,c:'#cfe8f5'},{n:'Үйкеліссіз (ой тәжірибесі)',mu:0,c:'#ece8ff'}];
+var GA={si:0,x:0,v:0,run:false,paused:false,marks:{},first:false,icue:false,push:0,gone:false};
+$('galS').innerHTML=SURF.map(function(s,i){return '<button class="btn'+(i?'':' on')+'" data-si="'+i+'">'+s.n+'</button>';}).join(' ');
+each(document.querySelectorAll('[data-si]'),function(b){b.onclick=function(){if(GA.paused)return;GA.si=+b.getAttribute('data-si');GA.run=false;GA.x=0;GA.v=0;GA.gone=false;each(document.querySelectorAll('[data-si]'),function(x){x.classList.toggle('on',x===b);});};});
+$('galGo').onclick=function(){if(GA.paused)return;GA.x=0;GA.v=6;GA.run=true;GA.push=.35;GA.icue=false;GA.gone=false;SND.tick();};
+$('galRe').onclick=function(){GA.marks={};GA.first=false;};
+LAB.cGal=function(c,w,h,dt){var S=SURF[GA.si];
+ if(GA.run&&!GA.paused){GA.push-=dt;GA.v=Math.max(0,GA.v-S.mu*9.8*dt);GA.x+=GA.v*dt;
+  if(GA.v<=0){GA.run=false;GA.marks[GA.si]=GA.x;if(!GA.first){GA.first=true;GA.paused=true;FZ.gal.show({num:'Сұрақ',q:'Шайба тоқтады. Бірақ оны тоқтатып тұрған қол да, қабырға да жоқ қой. <b>Шайбаны не тоқтатты?</b>',a:'Оны <b>үйкеліс күші</b> тоқтатты. Аристотель «қозғалыс үшін үнемі күш керек» деп ойлады. Ал Галилей байқады: үйкеліс неғұрлым аз болса, дене соғұрлым алысқа барады. Басқа беттерді таңдап, тексеріңдер!',onGo:function(){GA.paused=false;}});}}
+  if(S.mu===0&&!GA.icue&&GA.x>18){GA.icue=true;GA.paused=true;FZ.gal.show({num:'Ой тәжірибесі',q:'Үйкеліс мүлдем жоқ. Шайбаның жылдамдығы азаймай келеді. <b>Ол қашан тоқтайды?</b>',a:'<b>Ешқашан!</b> Оны тежейтін ешнәрсе жоқ — шайба тұрақты жылдамдықпен түзу сызықты қозғала береді. Бұл — Галилейдің <b>инерция заңы</b>.',onGo:function(){GA.paused=false;}});}
+  if(GA.x>41){GA.run=false;GA.gone=true;}}
+ c.fillStyle='#f7fbff';c.fillRect(0,0,w,h);var gy=h*.62,X=function(m){return 60+(w-110)*m/40;};
+ c.fillStyle=S.c;c.fillRect(0,gy,w,40);c.fillStyle='rgba(0,0,0,.08)';for(var i=0;i<w;i+=9)c.fillRect(i,gy+((i*37)%30)+4,2,2);
+ c.fillStyle='#8b8579';c.fillRect(0,gy+40,w,h-gy-40);for(var m=0;m<=40;m+=5){c.fillStyle='#fff';c.fillRect(X(m)-1,gy+40,2,10);txt(c,m+' м',X(m),gy+66,'#fff',13,'center','600');}
+ for(var k in GA.marks){var mx=X(Math.min(40,GA.marks[k]));c.strokeStyle='#333';c.lineWidth=1.5;c.beginPath();c.moveTo(mx,gy);c.lineTo(mx,gy-62);c.stroke();c.fillStyle=SURF[k].c;c.strokeStyle='#555';c.beginPath();c.moveTo(mx,gy-62);c.lineTo(mx+46,gy-52);c.lineTo(mx,gy-42);c.closePath();c.fill();c.stroke();
+  txt(c,SURF[k].n.split(' ')[0],mx+3,gy-68,INK,12,'left','700');txt(c,fx(GA.marks[k],1)+' м',mx+3,gy-28,INK,12,'left');}
+ var px=X(Math.min(GA.x,41));c.fillStyle='#111';c.beginPath();c.ellipse(px,gy-6,20,7,0,0,6.3);c.fill();c.fillRect(px-20,gy-12,40,6);c.beginPath();c.ellipse(px,gy-12,20,7,0,0,6.3);c.fillStyle='#333';c.fill();
+ if(GA.push>0)arw(c,px-90,gy-10,px-26,gy-10,'#e0662f',5);
+ if(GA.run||GA.paused)arw(c,px,gy-40,px+GA.v*14,gy-40,'#2563a8',3);
+ panel(c,14,14,330,62);txt(c,'Бет: '+S.n,28,38,INK,16,'left','700');txt(c,'μ = '+fx(S.mu,2)+'   v = '+fx(GA.v,1)+' м/с   s = '+fx(GA.x,1)+' м',28,62,'#646a73',14,'left');
+ if(GA.gone){panel(c,w-360,gy-120,340,56);txt(c,'→ шексіз қозғала береді!',w-190,gy-85,'#2563a8',20,'center','800');}
+ if(GA.paused)filmFrame(c,w,h);};
+
+/* ===== 4. Тиын ===== */
+var CO={mode:'',card:0,cx:0,cy:0,vy:0,run:false,paused:false,cued:false,inGlass:false};
+function coReset(){CO.mode='';CO.card=0;CO.cx=0;CO.cy=0;CO.vy=0;CO.run=false;CO.cued=false;CO.inGlass=false;CO.paused=false;FZ.coin.hide();}
+$('coF').onclick=function(){coReset();CO.mode='fast';CO.run=true;SND.tick();};$('coS').onclick=function(){coReset();CO.mode='slow';CO.run=true;};$('coR').onclick=coReset;
+LAB.cCoin=function(c,w,h,dt){var gx=w*.42,gy=h*.42,GW=130,GH=170,tab=gy+GH;
+ if(CO.run&&!CO.paused){var vc=CO.mode==='fast'?1700:130;var lim=CO.mode==='fast'?w:260;CO.card=Math.min(lim,CO.card+vc*dt);
+  var left=gx-120+CO.card,right=left+240,sup=(CO.cx+gx>=left&&CO.cx+gx<=right&&CO.cy===0);
+  if(CO.mode==='slow'&&sup)CO.cx=CO.card;
+  if(!sup||CO.cy>0){CO.vy+=1500*dt;CO.cy+=CO.vy*dt;var cxx=gx+CO.cx,inside=Math.abs(cxx-gx)<GW/2-10,floor=inside?GH-16:tab-gy+0;if(CO.cy>=floor){CO.cy=floor;CO.vy=0;CO.inGlass=inside;}
+   if(!CO.cued&&CO.mode==='fast'){CO.cued=true;CO.paused=true;FZ.coin.show({num:'Сұрақ',q:'Карточка ұшып кетті. <b>Тиын неге онымен бірге кетпеді?</b>',a:'Тиын <b>инерттілігіне</b> байланысты өзінің тыныштық күйін сақтады. Карточка оған өте аз уақыт әсер етті — тиын жылдамдық алып үлгермеді, сосын ауырлық күшінің әсерінен стақанға түсті.',onGo:function(){CO.paused=false;}});}}
+  if(CO.mode==='slow'&&CO.card>=lim&&!CO.cued){CO.cued=true;CO.paused=true;FZ.coin.show({num:'Салыстыр',q:'Карточканы <b>баяу</b> тартқанда тиын онымен бірге кетті. <b>Неге бұл жолы стақанға түспеді?</b>',a:'Баяу тартқанда үйкеліс күші тиынға <b>ұзақ уақыт</b> әсер етіп, оған карточканың жылдамдығын береді. Жылдам шерткенде әсер уақыты өте аз. Инерттілік — дененің жылдамдығын өзгерту үшін <b>уақыт керек</b> екенімен байланысты.',onGo:function(){CO.paused=false;CO.run=false;}});}}
+ c.fillStyle='#fbf8f2';c.fillRect(0,0,w,h);c.fillStyle='#b48a5e';c.fillRect(0,tab,w,h-tab);c.fillStyle='#9c7349';c.fillRect(0,tab,w,6);
+ c.fillStyle='rgba(200,230,250,.45)';c.strokeStyle='#8fb3c9';c.lineWidth=3;c.beginPath();c.moveTo(gx-GW/2,gy);c.lineTo(gx-GW/2+12,tab);c.lineTo(gx+GW/2-12,tab);c.lineTo(gx+GW/2,gy);c.fill();c.stroke();
+ var cl=gx-120+CO.card;if(cl<w){c.fillStyle='#e0662f';c.fillRect(cl,gy-7,240,7);txt(c,'карточка',cl+120,gy-12,'#b44d1f',12,'center','600');}
+ var coinX=gx+CO.cx,coinY=gy-7-9+CO.cy;c.fillStyle='#d9a520';c.beginPath();c.ellipse(coinX,coinY,24,8,0,0,6.3);c.fill();c.fillStyle='#f4cf55';c.beginPath();c.ellipse(coinX,coinY-3,24,8,0,0,6.3);c.fill();
+ if(!CO.run&&CO.card===0){c.fillStyle='#f1c9a7';c.beginPath();c.ellipse(gx-150,gy-4,26,14,0,0,6.3);c.fill();txt(c,'саусақ',gx-150,gy+28,'#646a73',12,'center');}
+ if(CO.inGlass)txt(c,'Тиын стақанда!',gx,tab+40,'#fff',20,'center','800');
+ if(CO.paused)filmFrame(c,w,h);};
+
+/* ===== 5. Арбашалар ===== */
+var CA={t:0,run:false,paused:false,cued:false,x:[0,0],v:[0,0]};var CAm=[1,4];
+function caReset(){CA.t=0;CA.run=false;CA.paused=false;CA.cued=false;CA.x=[0,0];CA.v=[0,0];FZ.cart.hide();}
+$('caGo').onclick=function(){caReset();CA.run=true;SND.tick();};$('caRe').onclick=caReset;
+LAB.cCart=function(c,w,h,dt){
+ if(CA.run&&!CA.paused){CA.t+=dt;for(var i=0;i<2;i++){if(CA.t<.2)CA.v[i]=20*CA.t/CAm[i];else if(CA.v[i]>0&&CA.t<.2+dt)CA.v[i]=20*.2/CAm[i];CA.x[i]+=CA.v[i]*dt;if(CA.x[i]>9){CA.x[i]=9;CA.v[i]=0;}}
+  if(!CA.cued&&CA.t>1.2){CA.cued=true;CA.paused=true;FZ.cart.show({num:'Сұрақ',q:'Екі арбашаға да бірдей күш (20 Н) бірдей уақыт (0,2 с) әсер етті. <b>Қайсысы инерттірек? Неге?</b>',a:'Массасы <b>4 кг</b> арбаша жылдамдығын баяу өзгертті: 1 м/с (ал 1 кг арбаша — 4 м/с). Ол <b>инерттірек</b>. Масса — дененің <b>инерттілігінің өлшемі</b>: массасы үлкен дененің жылдамдығын өзгерту қиын.',onGo:function(){CA.paused=false;}});}}
+ c.fillStyle='#fbf8f2';c.fillRect(0,0,w,h);var ppm=(w-200)/10;
+ for(var j=0;j<2;j++){var ty=h*.32+j*h*.38,X0=120;c.fillStyle='#9a9085';c.fillRect(40,ty+4,w-80,8);c.fillStyle='#555';c.fillRect(w-60,ty-50,12,62);
+  var sp=CA.t<.2&&CA.run?40+40*CA.t/.2:(CA.run||CA.t>0?80:40);c.strokeStyle='#777';c.lineWidth=3;c.beginPath();for(var z=0;z<=12;z++){var xx=40+sp*z/12;c.lineTo(xx,ty-22+(z%2?-10:10));}c.stroke();c.fillStyle='#555';c.fillRect(30,ty-50,12,62);
+  var cx=X0+CA.x[j]*ppm,cw=j?120:80,ch=j?62:42;c.fillStyle=j?'#2563a8':'#e0662f';rr(c,cx-cw/2,ty-ch,cw,ch-6,6);c.fill();c.fillStyle='#222';c.beginPath();c.arc(cx-cw/3,ty,9,0,6.3);c.arc(cx+cw/3,ty,9,0,6.3);c.fill();
+  txt(c,'m = '+CAm[j]+' кг',cx,ty-ch/2+2,'#fff',16,'center','800');
+  panel(c,w-250,ty-110,190,46);txt(c,'v = '+fx(CA.v[j],1)+' м/с',w-155,ty-80,j?'#2563a8':'#e0662f',20,'center','700',"Georgia,serif");
+  if(CA.paused){var L=CA.v[j]*30;if(L>4)arw(c,cx,ty-ch-14,cx+L,ty-ch-14,j?'#2563a8':'#e0662f',4);}}
+ txt(c,'серіппе',60,h*.32+40,'#646a73',12,'center');if(CA.paused)filmFrame(c,w,h);};
+
+/* ===== 6. Автобус ===== */
+var BU={mode:'',t:0,run:false,paused:false,cued:false,reveal:false,x:0,v:0,th:0,om:0,path:null};
+var BUQ={brake:{t:1.7,q:'Автобус <b>кілт тежелді</b>. Жолаушы алға қарай ауып кетті. <b>Оны алға ешкім итерген жоқ қой — неге?</b>',a:'Жолаушының денесі <b>инерция</b> бойынша бұрынғы жылдамдығын сақтауға тырысады. Аяғы еденмен бірге тежеледі, ал денесі алға қарай қозғалысын жалғастырады.'},
+ acc:{t:1.7,q:'Автобус <b>кілт жылдамдады</b>. <b>Жолаушы қандай күйде болады? Неге?</b>',a:'Жолаушы <b>артқа шалқаяды</b>: денесі бұрынғы (тыныштық) күйін сақтайды, ал аяғы автобуспен бірге алға кетеді.'},
+ uni:{t:1.6,q:'Автобус <b>бірқалыпты</b> түзу жүріп келеді. Жолаушы ешқайда ауытқымайды. <b>Неге?</b>',a:'Жолаушыға әсер ететін күштер <b>теңгерілген</b> (ауырлық күші мен еденнің реакция күші). Автобус пен жолаушының жылдамдығы бірдей әрі тұрақты — бірқалыпты автобус <b>инерциялық</b> санақ жүйесі.'},
+ turn:{t:1.85,q:'Автобус <b>оңға бұрылды</b>. <b>Жолаушы қай жаққа ауады? Неге?</b>',a:'Жолаушы <b>солға</b> (бұрылыстың сыртына) ауады: денесі инерция бойынша <b>бұрынғы бағытта түзу</b> қозғалуға тырысады (пунктир сызық), ал автобус бұрылып кетеді.'}};
+function buA(){var m=BU.mode,t=BU.t;if(m==='brake')return t>1.2&&BU.v>0?-7:0;if(m==='acc')return t>1.2&&BU.v<16?5:0;return 0;}
+function buStart(m){BU.mode=m;BU.t=0;BU.run=true;BU.paused=false;BU.cued=false;BU.reveal=false;BU.x=0;BU.th=0;BU.om=0;BU.v=m==='brake'?15:m==='uni'?12:0;FZ.bus.hide();
+ if(m==='turn'){BU.path=[];var x=0,y=0,ph=0,v=150;for(var t=0;t<=3.7;t+=.02){BU.path.push([x,y,ph,t]);var om=(t>1&&t<2.6)?1.0:0;ph+=om*.02;x+=Math.cos(ph)*v*.02;y+=Math.sin(ph)*v*.02;}}}
+each(document.querySelectorAll('[data-bus]'),function(b){b.onclick=function(){buStart(b.getAttribute('data-bus'));SND.tick();};});
+function busSide(c,w,h){var gy=h*.8;var g=c.createLinearGradient(0,0,0,gy);g.addColorStop(0,'#c6e0f2');g.addColorStop(1,'#eef6fb');c.fillStyle=g;c.fillRect(0,0,w,gy);
+ var off=BU.x*16;for(var i=0;i<Math.ceil(w/220)+2;i++){var tx=mod(i*220-off,Math.ceil(w/220+2)*220)-110;tree(c,tx,gy,1.5);}
+ c.fillStyle='#3b3f45';c.fillRect(0,gy,w,h-gy);c.fillStyle='#f2c230';for(var x=-mod(off,60);x<w;x+=60)c.fillRect(x,gy+30,32,4);
+ var bx=w*.12,bw=w*.76,by=gy-300,bh=270;c.fillStyle='#f0a63a';rr(c,bx,by,bw,bh,22);c.fill();c.fillStyle='#fff7ea';rr(c,bx+20,by+24,bw-40,bh-70,10);c.fill();
+ c.fillStyle='#c98a2a';c.fillRect(bx+20,by+bh-56,bw-40,14);c.fillStyle='#ffe28a';c.fillRect(bx+bw-14,by+bh-90,10,22);
+ for(var k=0;k<3;k++){var sx=bx+60+k*150;c.fillStyle='#4a6fa5';rr(c,sx,by+bh-120,60,64,6);c.fill();}
+ c.strokeStyle='#999';c.lineWidth=5;c.beginPath();c.moveTo(bx+40,by+50);c.lineTo(bx+bw-40,by+50);c.stroke();
+ c.fillStyle='#222';[bx+110,bx+bw-130].forEach(function(wx){c.beginPath();c.arc(wx,gy-18,26,0,6.3);c.fill();c.fillStyle='#999';c.beginPath();c.arc(wx,gy-18,10,0,6.3);c.fill();c.fillStyle='#222';});
+ var fx0=bx+bw*.68,fy=by+bh-56;person(c,fx0,fy,160,BU.th,'#1e2430',BU.mode==='uni');
+ txt(c,'алға →',bx+bw-70,by+44,'#b44d1f',15,'center','700');
+ panel(c,14,14,250,58);txt(c,'v = '+fx(BU.v,1)+' м/с',28,40,'#2563a8',20,'left','700',"Georgia,serif");var a=BU.run?buA():0;txt(c,a<0?'тежелу':a>0?'жылдамдау':'бірқалыпты / тыныштық',28,62,'#646a73',13,'left','600');
+ if(BU.paused&&BU.reveal){var hx=fx0+Math.sin(BU.th)*150,hy=fy-Math.cos(BU.th)*150;
+  if(BU.mode==='brake'){arw(c,bx+bw/2+60,by-24,bx+bw/2-60,by-24,'#c8372d',5);txt(c,'автобус тежеледі (a)',bx+bw/2,by-36,'#c8372d',14,'center','700');c.setLineDash([7,6]);arw(c,hx,hy,hx+110,hy,'#2e8b57',3);c.setLineDash([]);txt(c,'дене өз жылдамдығын сақтайды',hx+118,hy+5,'#2e8b57',14,'left','700');}
+  if(BU.mode==='acc'){arw(c,bx+bw/2-60,by-24,bx+bw/2+60,by-24,'#c8372d',5);txt(c,'автобус үдейді (a)',bx+bw/2,by-36,'#c8372d',14,'center','700');txt(c,'дене бұрынғы күйін сақтайды',hx-10,hy-24,'#2e8b57',14,'right','700');}
+  if(BU.mode==='uni'){arw(c,fx0,fy-80,fx0,fy-150+70,'#2563a8',0.01);force(c,fx0+30,fy-60,0,50,FC.g,'m','g');force(c,fx0+30,fy-60,0,-50,FC.n,'N','');}}}
+function busTop(c,w,h){c.fillStyle='#9cc27e';c.fillRect(0,0,w,h);var ox=w*.12,oy=h*.22;var P=BU.path;c.strokeStyle='#3b3f45';c.lineWidth=90;c.lineJoin='round';c.lineCap='round';c.beginPath();for(var i=0;i<P.length;i+=3){if(i)c.lineTo(ox+P[i][0],oy+P[i][1]);else c.moveTo(ox+P[i][0],oy+P[i][1]);}c.stroke();
+ c.strokeStyle='#f2c230';c.lineWidth=3;c.setLineDash([22,18]);c.stroke();c.setLineDash([]);
+ var idx=Math.min(P.length-1,Math.round(BU.t/.02)),p=P[idx],turning=BU.t>1&&BU.t<2.6;c.save();c.translate(ox+p[0],oy+p[1]);c.rotate(p[2]);c.fillStyle='#f0a63a';rr(c,-70,-28,140,56,10);c.fill();c.fillStyle='#fff7ea';rr(c,-60,-20,112,40,6);c.fill();c.fillStyle='#a8d4f0';c.fillRect(52,-20,12,40);
+ BU.lat+=((turning?-15:0)-BU.lat)*.12;c.fillStyle='#1e2430';c.beginPath();c.arc(10,BU.lat,10,0,6.3);c.fill();c.restore();
+ if(BU.paused&&BU.reveal){var px=ox+p[0]-Math.sin(p[2])*0+Math.sin(p[2])*(-BU.lat),py=oy+p[1];c.setLineDash([8,6]);arw(c,ox+p[0],oy+p[1],ox+p[0]+Math.cos(p[2]-0.0)*200,oy+p[1]+Math.sin(p[2])*200,'#2e8b57',3);c.setLineDash([]);
+  txt(c,'инерция бойынша түзу жол',ox+p[0]+Math.cos(p[2])*200+10,oy+p[1]+Math.sin(p[2])*200,'#1f5e3a',14,'left','700');}
+ panel(c,w-260,14,246,40);txt(c,'Жоғарыдан көрініс · оңға бұрылыс',w-137,40,INK,14,'center','700');}
+LAB.cBus=function(c,w,h,dt){if(BU.lat===undefined)BU.lat=0;
+ if(BU.run&&!BU.paused){BU.t+=dt;var a=buA();BU.v=Math.max(0,BU.v+a*dt);BU.x+=BU.v*dt;var target=-a*.055;BU.om+=(-40*(BU.th-target)-7*BU.om)*dt;BU.th+=BU.om*dt;
+  var Q=BUQ[BU.mode];if(Q&&!BU.cued&&BU.t>=Q.t){BU.cued=true;BU.paused=true;BU.reveal=false;FZ.bus.show({side:BU.mode==='turn'?'r':'l',num:'Жауабы қандай?',q:Q.q,a:Q.a,onRev:function(){BU.reveal=true;},onGo:function(){BU.paused=false;BU.reveal=false;}});}
+  if(BU.mode==='turn'&&BU.t>3.6)BU.run=false;if(BU.mode!=='turn'&&BU.t>4)BU.run=false;}
+ if(BU.mode==='turn')busTop(c,w,h);else busSide(c,w,h);
+ if(!BU.mode){panel(c,w/2-230,20,460,46);txt(c,'Төмендегі батырманы таңдаңыз',w/2,50,INK,17,'center','700');}
+ if(BU.paused)filmFrame(c,w,h);};
+
+/* ===== 7. Ғарыш ===== */
+var SP={t:0,run:false,paused:false,reveal:false,cue:{},vx:0,vy:0,eng:0,side:0,st:[]};
+for(var si=0;si<160;si++)SP.st.push([Math.random(),Math.random(),[.2,.5,1][si%3]]);
+function spReset(){SP.t=0;SP.run=false;SP.paused=false;SP.reveal=false;SP.cue={};SP.vx=0;SP.vy=0;FZ.space.hide();}
+$('spGo').onclick=function(){spReset();SP.run=true;SND.tick();};$('spRe').onclick=spReset;
+LAB.cSpace=function(c,w,h,dt){FLBG='rgba(6,10,28,.6)';
+ if(SP.run&&!SP.paused){SP.t+=dt;var t=SP.t;SP.eng=t<2?1:0;SP.side=(t>7&&t<8.2)?1:0;var ang=Math.atan2(SP.vy,SP.vx||1e-6);
+  if(SP.eng){SP.vx+=3*dt;}if(SP.side){SP.vy-=2.2*dt;}
+  if(!SP.cue.a&&t>=4.5){SP.cue.a=1;SP.paused=true;SP.reveal=false;FZ.space.show({num:'Сұрақ 1 / 2',q:'Қозғалтқыш <b>сөнді</b>. Ғарышта ауа да, үйкеліс те жоқ. <b>Зымыран тоқтай ма?</b>',a:'<b>Жоқ!</b> Оған басқа денелер (іс жүзінде) әсер етпейді: F<sub>R</sub> = 0. Сондықтан ол <b>тұрақты жылдамдықпен түзу сызықты</b> қозғала береді — Ньютонның І заңы.',onRev:function(){SP.reveal=true;},onGo:function(){SP.paused=false;SP.reveal=false;}});}
+  if(!SP.cue.b&&t>=6.8){SP.cue.b=1;SP.paused=true;SP.reveal=false;FZ.space.show({num:'Сұрақ 2 / 2',q:'Зымыранды жоғары қарай бұру керек. <b>Ол үшін не істеу керек?</b>',a:'<b>Күш түсіру керек</b> — бүйірлік қозғалтқышты қосамыз. Жылдамдықтың шамасы да, бағыты да тек <b>күштің әсерінен</b> өзгереді. Күш болмаса, жылдамдық өзгермейді.',onRev:function(){SP.reveal=true;},onGo:function(){SP.paused=false;SP.reveal=false;}});}
+  if(t>13)SP.run=false;}
+ c.fillStyle='#060a1c';c.fillRect(0,0,w,h);var mv=SP.paused?0:1;
+ for(var i=0;i<SP.st.length;i++){var s=SP.st[i];s[0]=mod(s[0]-SP.vx*dt*.02*s[2]*mv,1);s[1]=mod(s[1]+SP.vy*dt*.02*s[2]*mv*w/h,1);c.fillStyle='rgba(220,230,255,'+(.3+s[2]*.6)+')';c.fillRect(s[0]*w,s[1]*h,1.5*s[2]+.5,1.5*s[2]+.5);}
+ var a2=Math.atan2(-SP.vy,SP.vx||1e-6)*-1;if(SP.vx===0&&SP.vy===0)a2=0;var cx=w*.45,cy=h*.5;c.save();c.translate(cx,cy);c.rotate(Math.atan2(SP.vy*-1,SP.vx||0.0001)*-1);
+ if(SP.eng&&!SP.paused||SP.eng&&SP.paused){c.fillStyle='#ff9a1f';c.beginPath();c.moveTo(-60,-10);c.lineTo(-60-30-Math.random()*25,0);c.lineTo(-60,10);c.fill();}
+ c.fillStyle='#dfe4ea';rr(c,-60,-16,100,32,8);c.fill();c.fillStyle='#e0662f';c.beginPath();c.moveTo(40,-16);c.quadraticCurveTo(75,0,40,16);c.fill();c.fillStyle='#2563a8';c.beginPath();c.arc(10,0,7,0,6.3);c.fill();
+ c.fillStyle='#c8372d';c.beginPath();c.moveTo(-60,-16);c.lineTo(-74,-30);c.lineTo(-44,-16);c.moveTo(-60,16);c.lineTo(-74,30);c.lineTo(-44,16);c.fill();
+ if(SP.side){c.fillStyle='#ffd23f';c.beginPath();c.moveTo(-10,16);c.lineTo(0,40+Math.random()*10);c.lineTo(10,16);c.fill();}c.restore();
+ var v=Math.sqrt(SP.vx*SP.vx+SP.vy*SP.vy);panel(c,14,14,280,70);txt(c,'v = '+fx(v,2)+' км/с',28,42,'#2563a8',20,'left','700',"Georgia,serif");txt(c,'Қозғалтқыш: '+(SP.eng?'ҚОСУЛЫ':SP.side?'бүйірлік ҚОСУЛЫ':'сөнді'),28,68,SP.eng||SP.side?'#e0662f':'#646a73',14,'left','700');
+ if(SP.run||SP.paused){if(!SP.eng&&!SP.side)flab(c,'F','R = 0',cx,cy+70,'#ffb38a');}
+ if(SP.paused&&!SP.reveal)qbubble(c,cx,cy-50,'?');
+ if(SP.paused&&SP.reveal){if(SP.cue.b){arw(c,cx,cy+30,cx,cy-60,'#ffd23f',5);flab(c,'F','',cx+22,cy-50,'#ffd23f');}else{arw(c,cx+70,cy,cx+70+v*30,cy-SP.vy*30/(v||1),'#7fd8ff',4);flab(c,'v','= const',cx+100+v*30,cy-8,'#7fd8ff');}}
+ if(SP.paused)filmFrame(c,w,h);};
+
+/* ===== 8. Санақ жүйелері: стоп-кадр тәжірибесі ===== */
+var FR={t:0,run:false,paused:false,reveal:false,done:{},cue:'',Vw:0,X:0,bx:0,by:0,trail:[],jx:0,lamp:0,landed:false,end:false};
+var FRA={g:9.8,v0:4,ppm:95};
+// фазалар: A — перрон (0–3 с), B — бірқалыпты вагон (3–6,5 с), C — үдемелі вагон (6,5–11 с)
+var FRC=[
+ {t:1.01,id:'a',q:'Перронда (Жерде) тұрған бала допты <b>тік жоғары</b> лақтырды. Болжам жасаңдар: <b>доп қайда түседі?</b>',a:'Доп <b>лақтыру нүктесіне</b> — баланың қолына қайта түседі. Жерге қатысты инерция заңы орындалады: горизонталь бағытта допқа ешқандай күш әсер етпейді. <b>Жермен байланысты санақ жүйесі — инерциялық.</b>'},
+ {t:4.21,id:'b',q:'Енді бала <b>бірқалыпты</b> жүріп келе жатқан пойызда (v = 20 м/с). Ол допты тағы тік жоғары лақтырды. Доп ұшып жүргенде пойыз 16 м жол жүреді! <b>Доп қайда түседі: артқа ма, алға ма, әлде қолына ма?</b>',a:'Доп қайтадан <b>қолына</b> түседі! Доп та пойызбен бірге 20 м/с горизонталь жылдамдықпен қозғалады және оны <b>инерция</b> бойынша сақтайды. Бірқалыпты қозғалатын көлікте барлық құбылыстар <b>Жердегідей</b> болады: үстелдегі құмыра да тыныштығын сақтайды. Бұл — <b>инерциялық</b> санақ жүйесі.',def:'defIn'},
+ {t:7.41,id:'c',q:'Пойыз <b>үдей бастады</b> (a = 3 м/с²). Бала допты дәл солай тік лақтырды. <b>Доп енді қайда түседі? Құмыраға не болып жатыр?</b>',a:'Доп баланың <b>артына</b> түседі, ал құмыра үстелде <b>артқа сырғиды</b>, шам артқа ауытқиды — оларды ешкім итерген жоқ!'},
+ {t:8.6,id:'d',q:'<b>Неліктен</b> доп артқа түсті? Үдемелі вагонда <b>инерция заңы орындала ма?</b>',a:'Жерге қатысты доп өзінің горизонталь жылдамдығын <b>сақтады</b> (инерция), ал вагон <b>үдеп</b>, доптан озып кетті. Вагонның ішінде отырған адамға доп «өзінен-өзі» артқа ұшқандай көрінеді — инерция заңы <b>орындалмайды</b>. Жерге қатысты үдеумен қозғалатын вагон — <b>инерциялық емес</b> санақ жүйесі.',def:'defNon'},
+ {t:11,id:'e',tag:'ЖАУАБЫ ҚАНДАЙ?',q:'Неліктен Жермен байланысты санақ жүйесін <b>ғарышқа ұшу</b> есептеулерінде қолдануға болмайды?',a:'Жер өз осінен айналады және Күнді айналады — яғни ол <b>үдеумен</b> қозғалады. Қысқа уақыттағы жердегі қозғалыстар үшін бұл байқалмайды, сондықтан Жерді инерциялық деп аламыз. Ал ұзақ ғарыштық ұшуларда Жердің айналуы ескеріледі — онда Жер жүйесі <b>инерциялық емес</b> болып шығады.',go:'✓ Аяқтау'}];
+function frPhase(t){return t<3?'A':t<6.5?'B':'C';}
+function frThrow(t){return t<3?.6:t<6.5?3.8:7.0;}
+function frReset(){FR.t=0;FR.run=false;FR.paused=false;FR.reveal=false;FR.done={};FR.cue='';FR.Vw=0;FR.X=0;FR.jx=0;FR.lamp=0;FR.trail=[];FR.end=false;FZ.train.hide();$('frGo').textContent='▶ Тәжірибені бастау';
+ $('defIn').classList.remove('on');$('defNon').classList.remove('on');}
+$('frGo').onclick=function(){if(FR.end)frReset();if(FR.paused)return;FR.run=!FR.run;$('frGo').textContent=FR.run?'⏸ Үзіліс':'▶ Жалғастыру';SND.tick();};
+$('frRe').onclick=frReset;
+function frBall(){var t=FR.t,ph=frPhase(t),t0=frThrow(t),T=2*FRA.v0/FRA.g,tau=t-t0;
+ if(tau<0)return {x:0,y:0,fly:false};var a=ph==='C'?3:0;
+ if(tau<=T)return {x:-.5*a*tau*tau,y:FRA.v0*tau-.5*FRA.g*tau*tau,fly:true};
+ return {x:-.5*a*T*T,y:ph==='C'?-1.5:0,fly:false,landed:true};}
+LAB.cTrain=function(c,w,h,dt){
+ if(FR.run&&!FR.paused){var tn=FR.t+dt,cue=null;for(var i=0;i<FRC.length;i++){if(!FR.done[FRC[i].id]&&FR.t<FRC[i].t&&tn>=FRC[i].t){tn=FRC[i].t;cue=FRC[i];FR.done[cue.id]=1;break;}}
+  var ph0=frPhase(FR.t);FR.t=tn;var ph=frPhase(FR.t);if(ph!==ph0)FR.trail=[];
+  FR.Vw=ph==='A'?0:ph==='B'?20:20+3*(FR.t-6.5);FR.X+=FR.Vw*dt;
+  if(ph==='C'){FR.jx=Math.max(-.85,-.5*1.8*Math.pow(Math.max(0,FR.t-6.5),2));}
+  FR.lamp+=((ph==='C'?-Math.atan(3/9.8):0)-FR.lamp)*Math.min(1,dt*4);
+  var b=frBall();if(b.fly)FR.trail.push([b.x,b.y]);
+  if(cue){FR.paused=true;FR.reveal=false;FR.cue=cue.id;var cc=cue;
+   FZ.train.show({tag:cc.tag,num:'Стоп-кадр '+(FRC.indexOf(cc)+1)+' / '+FRC.length,q:cc.q,a:cc.a,go:cc.go,side:'n',
+    onRev:function(){FR.reveal=true;if(cc.def)$(cc.def).classList.add('on');},
+    onGo:function(){FR.paused=false;FR.reveal=false;if(cc.def)$(cc.def).classList.add('on');if(cc.id==='e'){FR.run=false;FR.end=true;$('frGo').textContent='▶ Қайта бастау';}}});}}
+ var ph2=frPhase(FR.t),ppm=Math.min(95,(w-80)/9.6),fy=h*.86,cx=w/2,b2=frBall();
+ if(ph2==='A'){var g=c.createLinearGradient(0,0,0,fy);g.addColorStop(0,'#bcdcf2');g.addColorStop(1,'#eef6fb');c.fillStyle=g;c.fillRect(0,0,w,h);
+  c.fillStyle='#d8cfc2';c.fillRect(w*.62,fy-230,w*.3,230);for(var k=0;k<3;k++){c.fillStyle='#a8cbe6';c.fillRect(w*.65+k*w*.09,fy-200,w*.06,60);}txt(c,'ВОКЗАЛ',w*.77,fy-210,'#7a6248',18,'center','800');
+  c.fillStyle='#9a9a9a';c.fillRect(0,fy,w,h-fy);c.fillStyle='#f2c230';c.fillRect(0,fy,w,5);
+  tree(c,w*.1,fy,1.4);tree(c,w*.5,fy,1.2);
+  var px=cx-1.2*ppm;person(c,px,fy,1.75*ppm,0,'#1e2430',!b2.fly&&FR.t>=.6?false:true);
+  var hx=px+.12*1.75*ppm,hy=fy-1.02*1.75*ppm;
+  c.setLineDash([4,5]);c.strokeStyle='rgba(200,55,45,.6)';c.lineWidth=2;c.beginPath();for(var q=0;q<FR.trail.length;q++){var tp=FR.trail[q];if(q)c.lineTo(hx+tp[0]*ppm,hy-tp[1]*ppm);else c.moveTo(hx+tp[0]*ppm,hy-tp[1]*ppm);}c.stroke();c.setLineDash([]);
+  c.fillStyle='#c8372d';c.beginPath();c.arc(hx+b2.x*ppm,hy-b2.y*ppm-8,10,0,6.3);c.fill();
+  panel(c,w-430,h-46,416,36);txt(c,'1-тәжірибе: перронда · санақ жүйесі — Жер',w-418,h-22,INK,15,'left','700');
+  if(FR.paused&&FR.reveal){arw(c,hx+60,hy-110,hx+60,hy-20,'#2e8b57',3);txt(c,'қолға түседі',hx+70,hy-60,'#2e8b57',15,'left','700');}}
+ else{var g2=c.createLinearGradient(0,0,0,h);g2.addColorStop(0,'#bcdcf2');g2.addColorStop(1,'#e6f1e0');c.fillStyle=g2;c.fillRect(0,0,w,h);var off=FR.X*40;
+  for(var i2=0;i2<Math.ceil(w/140)+2;i2++){var pp=mod(i2*140-off,Math.ceil(w/140+2)*140)-70;c.fillStyle='#6b6f75';c.fillRect(pp,40,6,h*.4);tree(c,pp+60,h*.48,1.1);}
+  var wl=cx-4.6*ppm,wr=cx+4.6*ppm,top=20;c.fillStyle='#e9dfcd';c.beginPath();c.rect(wl,top,wr-wl,fy-top);for(var k2=0;k2<4;k2++){var wx=wl+30+k2*(wr-wl-60)/4;c.rect(wx+12,top+22,(wr-wl-60)/4-24,h*.27);}c.fill('evenodd');
+  c.strokeStyle='#8a7a62';c.lineWidth=6;c.strokeRect(wl,top,wr-wl,fy-top);c.fillStyle='#7a6248';c.fillRect(wl,fy,wr-wl,14);
+  var tc=cx+.7*ppm,tY=fy-.8*ppm;c.fillStyle='#8b5a2b';c.fillRect(tc-1*ppm,tY-8,2*ppm,10);c.fillRect(tc-.9*ppm,tY,10,.8*ppm);c.fillRect(tc+.9*ppm-10,tY,10,.8*ppm);
+  var jx=tc+FR.jx*ppm;c.fillStyle='#b5651d';c.beginPath();c.moveTo(jx-16,tY-8);c.quadraticCurveTo(jx-26,tY-40,jx-10,tY-52);c.lineTo(jx+10,tY-52);c.quadraticCurveTo(jx+26,tY-40,jx+16,tY-8);c.closePath();c.fill();c.fillStyle='#8a4a14';c.fillRect(jx-12,tY-58,24,7);txt(c,'құмыра',jx,tY-64,'#7a6248',12,'center','700');
+  var lx=cx-1.0*ppm,ly=top+4,L=80;c.strokeStyle='#555';c.lineWidth=2;c.beginPath();c.moveTo(lx,ly);var ex=lx+Math.sin(FR.lamp)*L,ey=ly+Math.cos(FR.lamp)*L;c.lineTo(ex,ey);c.stroke();c.fillStyle='#ffd75e';c.beginPath();c.arc(ex,ey,11,0,6.3);c.fill();
+  var px2=cx-3.0*ppm;person(c,px2,fy,1.75*ppm,0,'#1e2430',b2.fly||FR.t<frThrow(FR.t));
+  var hx2=px2+.12*1.75*ppm,hy2=fy-1.02*1.75*ppm;
+  c.setLineDash([4,5]);c.strokeStyle='rgba(200,55,45,.6)';c.lineWidth=2;c.beginPath();for(var q2=0;q2<FR.trail.length;q2++){var tp2=FR.trail[q2];if(q2)c.lineTo(hx2+tp2[0]*ppm,hy2-tp2[1]*ppm);else c.moveTo(hx2+tp2[0]*ppm,hy2-tp2[1]*ppm);}c.stroke();c.setLineDash([]);
+  var byy=b2.landed&&ph2==='C'?fy-10:hy2-b2.y*ppm-8;c.fillStyle='#c8372d';c.beginPath();c.arc(hx2+b2.x*ppm,byy,10,0,6.3);c.fill();
+  if(b2.landed&&ph2==='C'){c.strokeStyle='#c8372d';c.lineWidth=2;c.beginPath();c.moveTo(hx2,fy+4);c.lineTo(hx2,fy-6);c.stroke();txt(c,fx(-b2.x,1)+' м артқа',hx2+b2.x*ppm/2,fy-22,'#c8372d',14,'center','800');}
+  txt(c,'алға →',wr-60,fy-10,'#7a6248',14,'center','700');
+  panel(c,w-470,h-40,456,32);txt(c,(ph2==='B'?'2-тәжірибе: бірқалыпты пойыз':'3-тәжірибе: үдемелі пойыз')+' · v = '+fx(FR.Vw,1)+' м/с'+(ph2==='C'?' · a = 3 м/с²':''),w-458,h-18,INK,14,'left','700');
+  if(FR.paused&&FR.reveal&&(FR.cue==='b')){arw(c,hx2,hy2-150,hx2+120,hy2-150,'#2e8b57',4);txt(c,'доп та 20 м/с-пен алға (инерция)',hx2,hy2-162,'#2e8b57',14,'left','700');}
+  if(FR.paused&&FR.reveal&&(FR.cue==='c'||FR.cue==='d')){arw(c,cx-80,top+h*.31,cx+80,top+h*.31,'#c8372d',5);txt(c,'вагонның үдеуі a',cx,top+h*.31-12,'#c8372d',14,'center','700');
+   arw(c,jx+30,tY-30,jx+90,tY-30,'#2e8b57',3);txt(c,'v Жер = const',jx+96,tY-26,'#2e8b57',13,'left','700');}}
+ if(!FR.run&&FR.t===0){panel(c,w/2-240,h/2-30,480,52);txt(c,'«▶ Тәжірибені бастау» батырмасын басыңыз',w/2,h/2+3,INK,17,'center','700');}
+ if(FR.paused&&!FR.reveal&&FR.cue!=='e'){var bb=frBall();var hxq=ph2==='A'?cx-1.2*ppm+.21*ppm:cx-3.0*ppm+.21*ppm,hyq=fy-1.785*ppm;qbubble(c,hxq+bb.x*ppm,hyq-bb.y*ppm-30,'Қайда түседі?');}
+ $('trRo').innerHTML=FR.t?('Уақыт: <b>'+fx(FR.t,1)+'</b> с'):'';
+ if(FR.paused)filmFrame(c,w,h);};
+
+/* ===== 9. Теңгерілген күштер ===== */
+var BA={v:12,x:0,paused:false,reveal:false,sc:-1,st:0};
+var BAS=[{Ft:2500,q:'F<sub>тарту</sub> = 2500 Н, F<sub>үйк</sub> = 1500 Н. <b>Тең әсерлі күш неге тең? Көлік қалай қозғалады?</b>',a:'F<sub>R</sub> = 2500 − 1500 = <b>1000 Н</b>, алға бағытталған. Көлік <b>үдемелі</b> қозғалады: жылдамдығы артады.'},
+ {Ft:1500,q:'F<sub>тарту</sub> = F<sub>үйк</sub> = 1500 Н. <b>Көлік тоқтай ма?</b>',a:'<b>Жоқ!</b> F<sub>R</sub> = F<sub>тарту</sub> + F<sub>үйк</sub> + F<sub>a</sub> + N = <b>0</b>. Күштер теңгерілген — көлік <b>бірқалыпты</b> қозғалысын сақтайды. Бұл — Ньютонның І заңының математикалық өрнегі.'},
+ {Ft:600,q:'F<sub>тарту</sub> = 600 Н, F<sub>үйк</sub> = 1500 Н. <b>Енді қалай қозғалады?</b>',a:'F<sub>R</sub> = 600 − 1500 = <b>−900 Н</b> — қозғалысқа қарсы. Көлік <b>кемімелі</b> қозғалады.'}];
+function baUpd(){$('baFtv').textContent=$('baFt').value+' Н';$('baFfv').textContent=$('baFf').value+' Н';}
+$('baFt').oninput=baUpd;$('baFf').oninput=baUpd;baUpd();
+$('baSc').onclick=function(){BA.sc=0;BA.st=0;BA.v=12;$('baFf').value=1500;$('baFt').value=BAS[0].Ft;baUpd();FZ.bal.hide();BA.paused=false;};
+LAB.cBal=function(c,w,h,dt){var Ft=+$('baFt').value,Ff=+$('baFf').value,m=1000,a=(Ft-Ff)/m;if(BA.v<=0&&a<0)a=0;
+ if(!BA.paused){BA.v=clamp(BA.v+a*dt,0,35);BA.x+=BA.v*dt;
+  if(BA.sc>=0){BA.st+=dt;if(BA.st>2.4){var s=BAS[BA.sc];BA.paused=true;BA.reveal=false;FZ.bal.show({num:'Стоп-кадр '+(BA.sc+1)+' / 3',q:s.q,a:s.a,onRev:function(){BA.reveal=true;},onGo:function(){BA.paused=false;BA.reveal=false;BA.sc++;BA.st=0;if(BA.sc<3){$('baFt').value=BAS[BA.sc].Ft;baUpd();}else BA.sc=-1;}});}}}
+ var gy=h*.6;roadScene(c,w,h,BA.x*12,gy);var cx=w*.27,base=gy+50,fy=base-27,k=.045;car(c,cx,base,1.7,'#2563a8',BA.x*.95);
+ var show=!BA.paused||BA.reveal;
+ if(show){force(c,cx+40,fy,Ft*k,0,FC.t,'F','тарту');force(c,cx-40,fy,-Ff*k,0,FC.f,'F','үйк');force(c,cx,fy,0,62,FC.g,'F','a');force(c,cx,fy,0,-62,FC.n,'N','');}else qbubble(c,cx,base-70,'F R = ?');
+ var px=w*.66,py=24,pw=w*.32,ph=h*.52;panel(c,px,py,pw,ph);var ox=px+pw/2,oy=py+ph*.5;c.strokeStyle='#bbb';c.lineWidth=1;c.beginPath();c.moveTo(px+14,oy);c.lineTo(px+pw-14,oy);c.moveTo(ox,py+14);c.lineTo(ox,py+ph-14);c.stroke();txt(c,'x',px+pw-22,oy-6,'#888',13);txt(c,'y',ox+6,py+24,'#888',13);
+ var k2=Math.min(.05,pw/2/3200);if(show){arw(c,ox,oy,ox+Ft*k2,oy,FC.t,3);arw(c,ox,oy,ox-Ff*k2,oy,FC.f,3);arw(c,ox,oy,ox,oy+60,FC.g,3);arw(c,ox,oy,ox,oy-60,FC.n,3);
+  var FR=Ft-Ff;if(Math.abs(FR)>1){arw(c,ox,oy+22,ox+FR*k2,oy+22,FC.r,6);flab(c,'F','R',ox+FR*k2+(FR>0?22:-22),oy+30,FC.r);}else flab(c,'F','R = 0',ox+60,oy+34,FC.r);}
+ txt(c,'Ox: F тарту − F үйк = '+(Ft-Ff)+' Н',px+16,py+ph-34,INK,14,'left','700');txt(c,'Oy: N − F a = 0',px+16,py+ph-14,INK,14,'left','700');
+ panel(c,14,14,250,64);txt(c,'v = '+fx(BA.v,1)+' м/с',28,42,'#2563a8',20,'left','700',"Georgia,serif");txt(c,a>0?'үдемелі':a<0?'кемімелі':'бірқалыпты',28,66,'#646a73',14,'left','700');
+ if(BA.paused)filmFrame(c,w,h);};
+
+/* ===== 10. Бүркіт ===== */
+var EA={t:0,x:.2,run:false,paused:false,reveal:false,cued:false};
+$('eaGo').onclick=function(){EA.t=0;EA.x=.12;EA.run=true;EA.cued=false;EA.paused=false;FZ.eag.hide();};$('eaRe').onclick=function(){EA.run=false;EA.x=.2;EA.cued=false;EA.paused=false;FZ.eag.hide();};
+function eagle(c,x,y,s,fl){c.save();c.translate(x,y);c.scale(s,s);c.fillStyle='#5a3a22';c.beginPath();c.moveTo(-10,0);c.lineTo(-70,-20+fl*30);c.lineTo(-95,-12+fl*40);c.lineTo(-60,6);c.closePath();c.fill();
+ c.beginPath();c.moveTo(10,0);c.lineTo(70,-20+fl*30);c.lineTo(95,-12+fl*40);c.lineTo(60,6);c.closePath();c.fill();
+ c.fillStyle='#6b4528';c.beginPath();c.ellipse(0,4,16,30,0,0,6.3);c.fill();c.fillStyle='#5a3a22';c.beginPath();c.moveTo(-8,30);c.lineTo(0,46);c.lineTo(8,30);c.fill();
+ c.fillStyle='#f1ead8';c.beginPath();c.arc(0,-26,10,0,6.3);c.fill();c.fillStyle='#f2c230';c.beginPath();c.moveTo(0,-35);c.lineTo(5,-44);c.lineTo(-3,-38);c.fill();c.restore();}
+LAB.cEag=function(c,w,h,dt){if(!EA.paused){EA.t+=dt;EA.x+=dt*.07;if(EA.x>1.1)EA.x=-.1;}
+ if(EA.run&&!EA.cued&&EA.t>2.4){EA.cued=true;EA.paused=true;EA.reveal=false;FZ.eag.show({num:'Жаттығу 13 · №1',q:'Бүркітке әсер ететін <b>күштерді бейнелеңдер</b> (тақтаға сызыңдар). Бүркіт бір биіктікте бірқалыпты қалықтап ұшып жүр. <b>Күштер бір-бірін теңгереді деп тұжырымдауға бола ма?</b>',a:'Бүркітке: <b>ауырлық күші mg</b> (төмен), <b>ауаның көтеруші күші</b> (жоғары), <b>ауаның кедергі күші</b> (қозғалысқа қарсы) әсер етеді, ал алға <b>қанаттың тарту күші</b> әсер етеді. Бүркіт бірқалыпты түзу ұшса — <b>иә</b>, күштер теңгерілген (F<sub>R</sub> = 0). Ал ол бұрылса, төмендесе немесе жылдамдығын өзгертсе — күштер теңгерілмеген.',onRev:function(){EA.reveal=true;},onGo:function(){EA.paused=false;EA.reveal=false;}});}
+ var g=c.createLinearGradient(0,0,0,h);g.addColorStop(0,'#9cc8ec');g.addColorStop(1,'#e8f2fa');c.fillStyle=g;c.fillRect(0,0,w,h);
+ c.fillStyle='#b9c6d3';c.beginPath();c.moveTo(0,h*.72);[[.1,.5],[.2,.62],[.33,.42],[.46,.6],[.58,.38],[.72,.58],[.85,.45],[1,.6]].forEach(function(p){c.lineTo(p[0]*w,p[1]*h);});c.lineTo(w,h);c.lineTo(0,h);c.fill();
+ c.fillStyle='#fff';[[.33,.42],[.58,.38],[.85,.45]].forEach(function(p){c.beginPath();c.moveTo(p[0]*w,p[1]*h);c.lineTo(p[0]*w-35,p[1]*h+40);c.lineTo(p[0]*w+35,p[1]*h+40);c.fill();});
+ c.fillStyle='#f4f7fa';c.fillRect(0,h*.82,w,h*.18);person(c,w*.12,h*.9,90,0,'#3a3a3a',true);
+ var ex=EA.x*w,ey=h*.34+Math.sin(EA.t*.8)*6;eagle(c,ex,ey,1.2,EA.paused?0:Math.sin(EA.t*2)*.15);
+ if(EA.paused&&!EA.reveal)qbubble(c,ex,ey-60,'Күштер?');
+ if(EA.paused&&EA.reveal){force(c,ex,ey,0,90,FC.g,'m','g');force(c,ex,ey,0,-90,FC.n,'F','көтеру');force(c,ex-30,ey+10,-80,0,FC.f,'F','кедергі');force(c,ex+30,ey+10,80,0,FC.t,'F','тарту');}
+ if(EA.paused)filmFrame(c,w,h);};
+
+/* ===== 11. Шаналар ===== */
+var SL={t:0,x:0,run:false,paused:false,reveal:false,cued:false};
+$('slGo').onclick=function(){SL.t=0;SL.run=true;SL.cued=false;SL.paused=false;FZ.sl.hide();};$('slRe').onclick=function(){SL.t=0;SL.x=0;SL.run=false;SL.paused=false;SL.cued=false;FZ.sl.hide();};
+$('slC').onclick=function(){var a=parseNum($('slA').value),b=parseNum($('slB').value);if(!isFinite(a)||!isFinite(b)){toast('Сандарды енгізіңіз');return;}var ok=Math.abs(a-400)<1&&Math.abs(b-400)<1;$('slR').innerHTML=ok?' <span class="ok">✓ Дұрыс! F тарту = F үйк = 400 Н</span>':' <span class="no">✗ Қайта есептеп көр: F үйк = μ·m·g</span>';ok?SND.ok():SND.bad();};
+LAB.cSl=function(c,w,h,dt){if(SL.run&&!SL.paused){SL.t+=dt;SL.x+=3*dt;}
+ if(SL.run&&!SL.cued&&SL.t>2){SL.cued=true;SL.paused=true;SL.reveal=false;FZ.sl.show({num:'Жаттығу 13 · №2',q:'Жүк тиелген шаналар көлдегі мұз бетімен <b>бірқалыпты</b> қозғалуда. m = 0,2 т = 200 кг, μ = 0,2, g = 10 Н/кг. <b>Шаналарға горизонталь түсірілген күштерді анықтаңдар.</b>',a:'Oy осі: N = mg = 200·10 = 2000 Н. Ox осі: қозғалыс бірқалыпты ⇒ F<sub>R</sub> = 0 ⇒ <b>F<sub>тарту</sub> = F<sub>үйк</sub></b>. F<sub>үйк</sub> = μN = 0,2·2000 = <b>400 Н</b>. Жауабы: F<sub>тарту</sub> = F<sub>үйк</sub> = 400 Н.',onRev:function(){SL.reveal=true;},onGo:function(){SL.paused=false;SL.reveal=false;}});}
+ var gy=h*.66;var g=c.createLinearGradient(0,0,0,gy);g.addColorStop(0,'#b7d3ea');g.addColorStop(1,'#eef5fb');c.fillStyle=g;c.fillRect(0,0,w,gy);c.fillStyle='#e6edf2';c.beginPath();c.moveTo(0,gy);c.lineTo(0,gy-40);c.quadraticCurveTo(w*.3,gy-90,w*.6,gy-50);c.quadraticCurveTo(w*.8,gy-30,w,gy-60);c.lineTo(w,gy);c.fill();
+ c.fillStyle='#cfe8f5';c.fillRect(0,gy,w,h-gy);c.strokeStyle='rgba(255,255,255,.8)';c.lineWidth=1.5;var off=SL.x*40;for(var i=0;i<Math.ceil(w/130)+2;i++){var px=mod(i*130-off,Math.ceil(w/130+2)*130)-60;c.beginPath();c.moveTo(px,gy+20);c.lineTo(px+40,gy+50);c.lineTo(px+30,gy+90);c.stroke();}
+ var sx=w*.28,sy=gy+10;c.strokeStyle='#7a5a3a';c.lineWidth=5;c.beginPath();c.moveTo(sx-110,sy);c.quadraticCurveTo(sx-120,sy-10,sx-118,sy-18);c.lineTo(sx+110,sy-18);c.quadraticCurveTo(sx+130,sy-18,sx+124,sy-4);c.stroke();
+ c.fillStyle='#a8743f';c.fillRect(sx-100,sy-40,200,20);c.fillStyle='#8b6b4a';rr(c,sx-90,sy-100,80,60,4);c.fill();rr(c,sx,sy-90,80,50,4);c.fill();c.fillStyle='#6b8f4a';rr(c,sx-50,sy-140,90,40,4);c.fill();
+ var tx=w*.6;c.strokeStyle='#444';c.lineWidth=2.5;c.beginPath();c.moveTo(sx+124,sy-24);c.lineTo(tx-60,sy-30);c.stroke();c.fillStyle='#c8372d';rr(c,tx-60,sy-70,150,46,10);c.fill();c.fillStyle='#222';c.fillRect(tx-70,sy-6,170,6);c.fillStyle='#333';c.beginPath();c.arc(tx+40,sy-80,16,0,6.3);c.fill();person(c,tx+30,sy-62,60,0,'#222');
+ txt(c,'m = 200 кг',sx,sy-150,INK,16,'center','700');
+ if(SL.paused&&!SL.reveal)qbubble(c,sx,sy-160,'F = ?');
+ if(SL.paused&&SL.reveal){var fy=sy-60;force(c,sx+124,sy-24,110,0,FC.t,'F','тарту = 400 Н');force(c,sx-110,sy-6,-110,0,FC.f,'F','үйк = 400 Н');force(c,sx,fy,0,110,FC.g,'mg','= 2000 Н');force(c,sx-60,sy-6,0,-120,FC.n,'N','= 2000 Н');}
+ if(SL.paused)filmFrame(c,w,h);};
+
+/* ===== 12. Бөрене ===== */
+var WL={t:0,y:0,vy:0,run:false,paused:false,reveal:false,cued:false};
+function wlUpd(){$('wlFv').textContent=fx(+$('wlF').value,1)+' Н';}$('wlF').oninput=wlUpd;wlUpd();
+$('wlGo').onclick=function(){WL.t=0;WL.y=0;WL.vy=0;WL.run=true;WL.cued=false;WL.paused=false;FZ.wl.hide();};
+$('wlC').onclick=function(){var a=parseNum($('wlA').value);if(!isFinite(a)){toast('Сан енгізіңіз');return;}var ok=Math.abs(a-.8)<.01;$('wlR').innerHTML=ok?' <span class="ok">✓ Дұрыс! μ = mg/F = 4/5 = 0,8</span>':' <span class="no">✗ Кеңес: μF = mg</span>';ok?SND.ok():SND.bad();};
+LAB.cWl=function(c,w,h,dt){var F=+$('wlF').value,mg=4,fmax=.8*F,press=Math.min(1,WL.t/.8);
+ if(WL.run&&!WL.paused){WL.t+=dt;if(press>=1&&fmax<mg){WL.vy+=(9.8-fmax/.4)*dt;WL.y+=WL.vy*dt*120;}else WL.vy=0;if(WL.y>h)WL.run=false;
+  if(!WL.cued&&WL.t>1.4&&fmax>=mg){WL.cued=true;WL.paused=true;WL.reveal=false;FZ.wl.show({side:'l',num:'Жаттығу 13 · №3',q:'Ұста массасы 400 г бөренені қабырғаға горизонталь бағытта 0,005 кН = 5 Н күшпен тіреп тұр. Бөрене құламайды. <b>Оған қандай күштер әсер етеді? Үйкеліс коэффициенті неге тең?</b>',a:'Ox: F = N = 5 Н (қол мен қабырғаның реакция күші теңгеріледі). Oy: F<sub>үйк</sub> = mg = 0,4·10 = 4 Н (үйкеліс ауырлық күшін теңгереді). F<sub>үйк</sub> = μN ⇒ μ = mg/F = 4/5 = <b>0,8</b>. Сырғанау шегінде осы мән — ең кіші қажетті μ.',onRev:function(){WL.reveal=true;},onGo:function(){WL.paused=false;WL.reveal=false;}});}}
+ c.fillStyle='#fbf8f2';c.fillRect(0,0,w,h);var wx=w*.62;c.fillStyle='#c9b79c';c.fillRect(wx,0,w-wx,h);c.strokeStyle='#b09a7a';for(var yy=0;yy<h;yy+=30){c.beginPath();c.moveTo(wx,yy);c.lineTo(w,yy);c.stroke();for(var xx=wx+((yy/30)%2?30:0);xx<w;xx+=60){c.beginPath();c.moveTo(xx,yy);c.lineTo(xx,yy+30);c.stroke();}}
+ var bw=60,bh=150,bx=wx-bw,by=h*.3+WL.y;c.fillStyle='#a8743f';rr(c,bx,by,bw,bh,10);c.fill();c.strokeStyle='#7a5228';c.lineWidth=2;for(var k=1;k<4;k++){c.beginPath();c.moveTo(bx+8,by+k*bh/4);c.lineTo(bx+bw-8,by+k*bh/4+6);c.stroke();}
+ var hx=bx-(1-press)*120;c.fillStyle='#f1c9a7';rr(c,hx-150,by+bh/2-22,150,44,18);c.fill();c.fillStyle='#3a5a8a';c.fillRect(hx-260,by+bh/2-26,120,52);
+ txt(c,'m = 400 г',bx+bw/2,by-12,INK,15,'center','700');
+ if(WL.y>4)txt(c,'μF < mg — бөрене сырғанап құлайды!',w*.3,60,'#c8372d',18,'center','800');
+ if(WL.paused&&!WL.reveal)qbubble(c,bx+bw/2,by-30,'?');
+ if(WL.paused&&WL.reveal){var cy=by+bh/2,cx=bx+bw/2;force(c,cx-20,cy,90,0,FC.t,'F','= 5 Н');force(c,cx+20,cy+20,-100,0,FC.n,'N','= 5 Н');force(c,cx,cy,0,100,FC.g,'mg','= 4 Н');force(c,bx+bw-6,cy-10,0,-100,FC.f,'F','үйк = 4 Н');}
+ if(WL.paused)filmFrame(c,w,h);};
+
+/* ===== Қорытынды ===== */
+each(document.querySelectorAll('.qa'),function(q){q.onclick=function(){q.classList.toggle('open');SND.tick();};});
+
+/* ===== Жауап тексеру: 2 мүмкіндік ===== */
+var TICK={};
+function mkTask(box,o,cb){var d=document.createElement('div');d.className=o.cls;
+ d.innerHTML=(o.head?'<div class="tn">'+o.head+'</div>':'')+'<div class="tq">'+o.q+'</div><div class="ck"></div>';box.appendChild(d);
+ var ck=d.querySelector('.ck'),r=document.createElement('span'),left=2,st={pts:o.pts||0,got:0,done:false},inp=null;r.className='ck-r';
+ if(!o.show)o.show=o.ch?o.ch[o.a]:String(o.a).replace('.',',')+' '+(o.unit||'');
+ function fin(ok){st.done=true;st.got=ok?st.pts:0;d.classList.add(ok?'ck-good':'ck-fail');if(inp)inp.disabled=true;
+  each(ck.querySelectorAll('.ck-ch'),function(x,j){x.disabled=true;if(j===o.a)x.classList.add('ck-right');});
+  r.innerHTML=(ok?'<span class="ok">✓ Дұрыс!'+(st.pts?' +'+st.pts+' балл':'')+'</span>':'<span class="no">✗ Дұрыс жауабы: '+o.show+'</span>')+(o.sol?' <span class="ck-sol">'+o.sol+'</span>':'');if(cb)cb();}
+ function miss(){left--;SND.bad();if(left<=0)fin(false);else r.innerHTML='<span class="no">✗ Қате. Тағы 1 мүмкіндік бар.</span>'+(o.hint?' <span class="ck-sol">Кеңес: '+o.hint+'</span>':'');}
+ if(o.ch){o.ch.forEach(function(t,i){var b=document.createElement('button');b.className='btn ck-ch';b.innerHTML=t;
+   b.onclick=function(){if(st.done)return;if(i===o.a){SND.ok();fin(true);}else{b.classList.add('ck-wrong');b.disabled=true;miss();}};ck.appendChild(b);});}
+ else{ck.innerHTML=(o.pre?'<span>'+o.pre+'</span>':'')+'<input placeholder="?">'+(o.unit?'<span>'+o.unit+'</span>':'')+'<button class="btn main">Тексеру</button>';inp=ck.querySelector('input');
+  var go=function(){if(st.done)return;var v=parseNum(inp.value);if(!isFinite(v)){toast('Сан енгізіңіз');return;}
+   if(Math.abs(v-o.a)<=Math.abs(o.a)*.01+1e-9){SND.ok();fin(true);}else{miss();inp.select();}};
+  ck.querySelector('button').onclick=go;inp.onkeydown=function(e){if(e.keyCode===13)go();};}
+ ck.appendChild(r);return st;}
+each(document.querySelectorAll('.fsb'),function(b){b.onclick=function(){toggleFS();};});
+
+/* ===== 3D: дастарқан фокусы ===== */
+var T3={init:false,R:null,run:false,slow:true,cued:false,res:false,t:0,xc:0,vc:0,yaw:.42,pitch:.5,dist:2.75,D:[],M:[]};
+var T3MU=.3,T3G=10,T3EDGE=.85,T3BACK=-.75;
+var T3DEF=[{n:'Стақан',x:-.35,z:.17,r:.04},{n:'Тәрелке',x:-.1,z:-.2,r:.12},{n:'Кесе',x:.15,z:.16,r:.05}];
+function t3Reset(){T3.run=false;T3.cued=false;T3.res=false;T3.t=0;T3.xc=0;T3.vc=0;
+ T3.D=T3DEF.map(function(o){return{n:o.n,x:o.x,x0:o.x,z:o.z,r:o.r,v:0,on:true,fall:false,down:false,y:0,vy:0,rot:0,tOn:0,vOff:0};});
+ if(FZ.t3)FZ.t3.hide();t3Txt();}
+function t3Txt(){var A=+$('t3A').value,h;$('t3Av').textContent=A+' м/с²';
+ if(!T3.res)h='<b>Тапсырма:</b> тарту үдеуін өзгертіп, тәжірибені үш рет жасаңыз: <b>a = 2, 8 және 30 м/с²</b>. Қай жағдайда ыдыстардың бәрі үстелде қалады? Ыдыс пен дастарқан арасындағы үйкеліс коэффициенті μ = 0,3, сондықтан үйкеліс ыдысқа ең көбі μg = 3 м/с² үдеу бере алады.';
+ else h=T3.D.map(function(o){return '<b>'+o.n+'</b>: '+(o.down?'<span class="no">құлады</span>':'үстелде, '+Math.round((o.x-o.x0)*100)+' см жылжыды')+(o.tOn?' <span style="color:var(--muted)">(дастарқанда '+fx(o.tOn,2)+' с, v = '+fx(o.vOff,2)+' м/с)</span>':'');}).join(' &nbsp;·&nbsp; ')
+  +'<br><span style="color:var(--blue)">Дастарқан неғұрлым жылдам тартылса, соғұрлым ол ыдысқа аз уақыт әсер етеді — ыдыс инерттілігіне байланысты жылдамдық алып үлгермейді.</span>';
+ $('t3Txt').innerHTML=h;}
+function t3Step(d){var A=+$('t3A').value,mg=T3MU*T3G;
+ if(T3.xc<2.4){T3.vc+=A*d;T3.xc+=T3.vc*d;}
+ var back=T3BACK+T3.xc;T3.t+=d;
+ T3.D.forEach(function(o){if(o.down)return;
+  if(o.fall){o.vy+=T3G*d;o.y-=o.vy*d;o.x+=o.v*d;o.rot=Math.min(o.n==='Тәрелке'?.6:Math.PI/2,o.rot+5*d);if(o.y<=-.76+(o.n==='Тәрелке'?0:o.r)){o.y=-.76+(o.n==='Тәрелке'?0:o.r);o.fall=false;o.down=true;o.v=0;SND.bad();}return;}
+  if(o.on&&o.x<back){o.on=false;o.tOn=T3.t;o.vOff=o.v;}
+  if(o.on)o.v=A<=mg?T3.vc:Math.min(T3.vc,o.v+mg*d);
+  else o.v=Math.max(0,o.v-T3MU*T3G*d);
+  o.x+=o.v*d;if(o.x>T3EDGE){o.fall=true;o.on=false;o.vy=0;}});}
+function t3Cue(){if(T3.cued)return;T3.cued=true;var A=+$('t3A').value,fell=T3.D.filter(function(o){return o.down;}).length,o;
+ if(A<=T3MU*T3G)o={num:'Неге?',q:'Ыдыстар дастарқанмен <b>бірге кетіп</b>, еденге құлады. Неге?',a:'Тарту үдеуі тым аз (a ≤ μg = 3 м/с²). Үйкеліс күші ыдыстарды дастарқанмен бірге қозғалтып үлгерді — ыдыстар сырғанамады. Тиын тәжірибесіндегі «баяу тарту» сияқты.'};
+ else if(fell)o={num:'Неге?',q:'Кейбір ыдыс құлады. <b>Неге? Не өзгерту керек?</b>',a:'Дастарқан ыдысқа ұзағырақ әсер етті — ыдыс көбірек жылдамдық алды. Үстелдің шетіне жақын тұрған ыдыс бірінші құлайды. Дастарқанды жылдамырақ (үлкен үдеумен) тарту керек.'};
+ else o={num:'Неге?',q:'Дастарқан ұшып шықты, ал ыдыстар <b>орнында қалды</b>. Неге?',a:'Дастарқан ыдыстарға үйкеліс арқылы өте қысқа уақыт (≈0,2 с) әсер етті. Ыдыстар <b>инерттілігіне</b> байланысты жылдамдығын бірден өзгерте алмады — аз ғана жылдамдық алып, бірнеше сантиметр жылжыды да тоқтады.'};
+ o.side='n';o.go='✓ Түсіндім';FZ.t3.show(o);}
+function t3Init(){T3.init=true;var cv=$('c3d');
+ if(typeof THREE==='undefined'){$('t3Hud').innerHTML='<b>three.min.js</b> табылмады — оны HTML файлмен бір бумаға қойыңыз.';return;}
+ try{T3.R=new THREE.WebGLRenderer({canvas:cv,antialias:true});}catch(e){$('t3Hud').innerHTML='Бұл компьютерде WebGL қосылмаған.';return;}
+ var R=T3.R;R.setClearColor(0xe9eef2);R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+ var S=T3.S=new THREE.Scene();T3.cam=new THREE.PerspectiveCamera(36,2,.05,40);
+ S.add(new THREE.HemisphereLight(0xffffff,0x9a8a74,.7));var L=new THREE.DirectionalLight(0xfff4e6,.85);L.position.set(1.2,3.2,2);L.castShadow=true;L.shadow.mapSize.set(1024,1024);
+ var sc=L.shadow.camera;sc.left=-2.5;sc.right=2.5;sc.top=2.5;sc.bottom=-2.5;sc.near=.5;sc.far=8;S.add(L);
+ function M(c,o){var p={color:c,roughness:.75,metalness:0};if(o)for(var q in o)p[q]=o[q];return new THREE.MeshStandardMaterial(p);}
+ function mesh(g,m,par){var x=new THREE.Mesh(g,m);x.castShadow=true;x.receiveShadow=true;(par||S).add(x);return x;}
+ function ctex(draw,n){var c=document.createElement('canvas');c.width=c.height=n;draw(c.getContext('2d'),n);var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;}
+ var ft=ctex(function(g,n){g.fillStyle='#c9a87c';g.fillRect(0,0,n,n);g.strokeStyle='#a8865a';g.lineWidth=3;for(var i=0;i<4;i++){g.beginPath();g.moveTo(0,i*n/4+1);g.lineTo(n,i*n/4+1);g.stroke();}},128);ft.repeat.set(6,6);
+ var fl=mesh(new THREE.PlaneGeometry(10,10),M(0xffffff,{map:ft}));fl.rotation.x=-Math.PI/2;fl.position.y=-.76;fl.castShadow=false;
+ var wl=mesh(new THREE.PlaneGeometry(30,6),M(0xefe6d6));wl.position.set(0,2,-1.4);wl.castShadow=false;
+ var wood=M(0x8d5f35,{roughness:.6});mesh(new THREE.BoxGeometry(1.7,.05,1.04),wood).position.y=-.026;
+ [[-.78,-.44],[.78,-.44],[-.78,.44],[.78,.44]].forEach(function(p){mesh(new THREE.BoxGeometry(.06,.71,.06),wood).position.set(p[0],-.405,p[1]);});
+ var chk=function(g,n){var s=n/4;for(var i=0;i<4;i++)for(var j=0;j<4;j++){g.fillStyle=(i+j)%2?'#f7f3ea':'#c8372d';g.fillRect(i*s,j*s,s,s);}};
+ T3.tx=[ctex(chk,64),ctex(chk,64),ctex(chk,64)];T3.tx.forEach(function(t){t.repeat.set(5,4.5);t.magFilter=THREE.NearestFilter;});
+ T3.ct=mesh(new THREE.BoxGeometry(1,.006,.9),M(0xffffff,{map:T3.tx[0]}));T3.ct.position.y=.003;
+ T3.ch=mesh(new THREE.BoxGeometry(.006,1,.9),M(0xffffff,{map:T3.tx[1]}));
+ T3.cf=mesh(new THREE.BoxGeometry(1,.006,.9),M(0xffffff,{map:T3.tx[2]}));
+ var gl=new THREE.Group(),pl=new THREE.Group(),cu=new THREE.Group();
+ mesh(new THREE.CylinderGeometry(.04,.034,.13,28,1,true),M(0xcfe8f5,{transparent:true,opacity:.35,roughness:.1,side:THREE.DoubleSide}),gl).position.y=.065;
+ mesh(new THREE.CylinderGeometry(.036,.033,.08,28),M(0x4aa3df,{transparent:true,opacity:.75,roughness:.2}),gl).position.y=.042;
+ mesh(new THREE.CylinderGeometry(.08,.12,.022,40),M(0xfbfbf7,{roughness:.35}),pl).position.y=.011;
+ mesh(new THREE.SphereGeometry(.04,24,18),M(0xc8372d,{roughness:.45}),pl).position.set(-.025,.058,.01);
+ mesh(new THREE.SphereGeometry(.036,24,18),M(0x9cc23a,{roughness:.45}),pl).position.set(.045,.054,-.02);
+ mesh(new THREE.CylinderGeometry(.05,.04,.08,32),M(0x2563a8,{roughness:.4}),cu).position.y=.04;
+ mesh(new THREE.TorusGeometry(.025,.007,10,24),M(0x2563a8,{roughness:.4}),cu).position.set(.055,.045,0);
+ var tea=mesh(new THREE.CircleGeometry(.045,28),M(0x8a4b1e),cu);tea.rotation.x=-Math.PI/2;tea.position.y=.074;
+ T3.M=[gl,pl,cu];T3.M.forEach(function(g){S.add(g);});
+ T3.arw=new THREE.ArrowHelper(new THREE.Vector3(1,0,0),new THREE.Vector3(.95,-.2,0),.4,0xe0662f,.08,.06);S.add(T3.arw);
+ var drag=null;
+ cv.addEventListener('pointerdown',function(e){drag=[e.clientX,e.clientY];try{cv.setPointerCapture(e.pointerId);}catch(x){}cv.style.cursor='grabbing';});
+ cv.addEventListener('pointermove',function(e){if(!drag)return;T3.yaw-=(e.clientX-drag[0])*.008;T3.pitch=clamp(T3.pitch+(e.clientY-drag[1])*.006,.08,1.35);drag=[e.clientX,e.clientY];});
+ var up=function(){drag=null;cv.style.cursor='';};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+ cv.addEventListener('wheel',function(e){T3.dist=clamp(T3.dist*(e.deltaY>0?1.08:.93),1.6,5);e.preventDefault();},{passive:false});
+ t3Reset();}
+function t3Sync(){var back=T3BACK+T3.xc,top=T3EDGE-back,gx=Math.max(0,T3.xc-1.6),rest=.3+Math.min(T3.xc,1.6),hang=Math.min(rest,.74)-Math.min(gx,.74),flr=Math.max(0,rest-.74);
+ T3.ct.visible=top>.002;if(top>.002){T3.ct.scale.x=top;T3.ct.position.x=(back+T3EDGE)/2;T3.tx[0].repeat.x=top*5;}
+ T3.ch.visible=hang>.002;if(hang>.002){T3.ch.scale.y=hang;T3.ch.position.set(T3EDGE+.006+gx,-hang/2,0);T3.tx[1].repeat.y=hang*5;}
+ T3.cf.visible=flr>.002;if(flr>.002){T3.cf.scale.x=flr;T3.cf.position.set(T3EDGE+.02+gx+flr/2,-.756,0);T3.tx[2].repeat.x=flr*5;}
+ T3.D.forEach(function(o,i){var g=T3.M[i];g.position.set(o.x,o.y+(o.on?.006:0),o.z);g.rotation.z=-o.rot;});
+ var A=+$('t3A').value;T3.arw.visible=T3.xc<1.6&&!T3.res;T3.arw.position.set(T3EDGE+.1,-.08,0);T3.arw.setLength(.15+A*.012,.08,.06);
+ var c=T3.cam,p=T3.pitch,y=T3.yaw,d=T3.dist;c.position.set(d*Math.cos(p)*Math.sin(y),-.12+d*Math.sin(p),d*Math.cos(p)*Math.cos(y));c.lookAt(0,-.12,0);
+ $('t3Hud').innerHTML='a = <b>'+A+'</b> м/с² · t = <b>'+fx(T3.t,2)+'</b> с · дастарқан жылдамдығы <b>'+fx(T3.vc,1)+'</b> м/с'+(T3.slow?' · <span style="color:var(--acc)">баяу ×5</span>':'')+(A<=T3MU*T3G?'<br><span style="color:var(--red)">a ≤ μg = 3 м/с²: ыдыс дастарқанмен бірге қозғалады</span>':'');}
+TICK.t3=function(dt){var cv=$('c3d');if(!T3.init)t3Init();if(!T3.R)return;var w=cv.clientWidth,h=cv.clientHeight;if(!w)return;
+ var k=Math.min(2,Math.max(1,(window.devicePixelRatio||1)*SCALE)),W=Math.round(w*k),H=Math.round(h*k);
+ if(cv.width!==W||cv.height!==H){T3.R.setSize(W,H,false);T3.cam.aspect=w/h;T3.cam.updateProjectionMatrix();}
+ if(T3.run&&!FZ.t3.isOn()){var d=dt*(T3.slow?.2:1),n=Math.ceil(d/.002);for(var i=0;i<n;i++)t3Step(d/n);
+  if(T3.xc>=2.4&&T3.D.every(function(o){return o.down||(!o.fall&&o.v===0);})){T3.run=false;T3.res=true;t3Txt();t3Cue();}}
+ t3Sync();T3.R.render(T3.S,T3.cam);};
+$('t3Go').onclick=function(){if(!T3.R)return;t3Reset();T3.run=true;SND.tick();};$('t3Re').onclick=function(){if(T3.R)t3Reset();};
+$('t3A').oninput=function(){if(T3.R&&(T3.run||T3.res))t3Reset();else t3Txt();};
+$('t3Slow').onclick=function(){T3.slow=!T3.slow;$('t3Slow').classList.toggle('on',T3.slow);};
+FZ.t3=new Freezer('b3d');t3Txt();
+
+/* ===== Функционалдық сауаттылық: белдік ===== */
+var FL={run:false,T:-9,sc:0,items:[]};
+$('flGo').onclick=function(){FL.run=true;FL.T=-1.1;SND.tick();};$('flRe').onclick=function(){FL.run=false;FL.T=-9;};
+LAB.cFl=function(c,w,h,dt){var v=20,S=70,bx=w-58;
+ if(FL.run){FL.T+=FL.T<0?dt:dt*.05;if(FL.T>.1){FL.T=.1;FL.run=false;}}
+ var T=FL.T<-5?-.45:FL.T;c.fillStyle='#fbf8f2';c.fillRect(0,0,w,h);
+ [{belt:true,lab:'Белдікпен',col:'#2e8b57'},{belt:false,lab:'Белдіксіз',col:'#c8372d'}].forEach(function(L,i){var y0=i*h/2,gy=y0+h/2-24;
+  c.fillStyle='#3b3f45';c.fillRect(0,gy,w,20);c.strokeStyle='#f2efe2';c.lineWidth=2;c.setLineDash([16,14]);c.beginPath();c.moveTo(0,gy+10);c.lineTo(w,gy+10);c.stroke();c.setLineDash([]);
+  c.fillStyle='#9aa0a6';c.fillRect(bx,gy-58,34,58);for(var s=0;s<4;s++){c.fillStyle=s%2?'#1e2430':'#f2c230';c.fillRect(bx,gy-58+s*10,34,10);}
+  var front=T<0?bx+T*260:bx,cl=280,x0=front-cl,sq=T>0?10:0,fy=gy-12;
+  var rel=T<=0?0:L.belt?(function(t){t=Math.min(t,.05);return v*t-200*t*t;})(T):Math.min(v*T,.6),hit=!L.belt&&v*T>=.6;
+  c.fillStyle='rgba(190,224,245,.55)';rr(c,x0+40,fy-96,cl-110-sq,60,14);c.fill();c.strokeStyle='#5b6470';c.lineWidth=2;c.stroke();
+  c.fillStyle='#6b5a4a';c.fillRect(x0+72,fy-82,9,50);c.fillRect(x0+149,fy-84,9,52);c.fillRect(x0+72,fy-38,60,8);c.fillRect(x0+149,fy-38,60,8);
+  function man(hx,hy,lean,col,belt){var tx=hx+Math.sin(lean)*42,ty=hy-Math.cos(lean)*42;c.strokeStyle=col;c.lineWidth=8;c.lineCap='round';c.beginPath();c.moveTo(hx,hy);c.lineTo(tx,ty);c.stroke();
+   c.beginPath();c.moveTo(hx,hy);c.lineTo(hx+30,hy+2);c.lineTo(hx+34,hy+26);c.stroke();c.fillStyle='#f1c9a7';c.beginPath();c.arc(tx+Math.sin(lean)*11,ty-Math.cos(lean)*11,10,0,6.3);c.fill();
+   if(belt){c.strokeStyle='#30343a';c.lineWidth=3;c.beginPath();c.moveTo(hx-6,ty+2);c.lineTo(hx+10,hy-2);c.stroke();}}
+  var lean=L.belt?Math.min(1,rel/.5)*.22:(hit?.75:rel/.6*.55);
+  man(x0+86+rel*S,fy-40,lean,L.col,L.belt);man(x0+163,fy-40,T>0?.25:0,'#2563a8',true);
+  c.strokeStyle='#30343a';c.lineWidth=4;c.beginPath();c.moveTo(x0+214,fy-62);c.lineTo(x0+204,fy-40);c.stroke();
+  c.fillStyle='#d8dde3';rr(c,x0+8,fy-36,cl-8-sq,30,8);c.fill();c.strokeStyle='#5b6470';c.lineWidth=2;c.stroke();
+  [x0+60,x0+cl-62].forEach(function(wx){c.fillStyle='#1e2430';c.beginPath();c.arc(wx,fy-4,15,0,6.3);c.fill();c.fillStyle='#9aa0a6';c.beginPath();c.arc(wx,fy-4,6,0,6.3);c.fill();});
+  txt(c,L.lab,w-10,y0+20,L.col,16,'right','800');
+  var rt=function(t,x,col,al){c.font='700 13px "Segoe UI",Arial';var mw=c.measureText(t).width,xa=al==='right'?x-mw:x;c.fillStyle='#3b3f45';c.fillRect(xa-5,gy+2,mw+10,16);txt(c,t,x,gy+15,col,13,al,'700');};
+  if(i===0)rt(T>0?'баяу көрініс · t = '+fx(T,3)+' с':'v = 72 км/сағ',w-10,'#e6e8ec','right');
+  if(T>0&&L.belt&&T>=.05)rt('0,5 м жолда тоқтады ✓',10,'#9be3b0','left');
+  if(hit){var hx=x0+149,hy=fy-84;c.fillStyle='#c8372d';c.beginPath();for(var k=0;k<16;k++){var a=k*Math.PI/8,r=k%2?9:20;c.lineTo(hx+Math.cos(a)*r,hy+Math.sin(a)*r);}c.closePath();c.fill();rt('Соққы! t = 0,03 с',10,'#ffd75e','left');}
+  if(i===0)c.fillStyle='#d9d4c8';if(i===0)c.fillRect(0,h/2-1,w,2);});};
+var FLQ=[
+ {q:'Көліктің жылдамдығын ХБЖ-да өрнектеңіз.',pre:'v = ',a:20,unit:'м/с',hint:'1 км/сағ = 1000 м / 3600 с',sol:'72 · 1000 / 3600 = 20 м/с'},
+ {q:'Белдіксіз Нұрлан инерция бойынша 20 м/с жылдамдықпен қозғалысын жалғастырады. Ол алдыңғы орындыққа қанша уақыттан кейін соғылады?',pre:'t = ',a:.03,unit:'с',hint:'t = s / v',sol:'t = 0,6 / 20 = 0,03 с — көзді ашып-жұмудан да тез!'},
+ {q:'Белдік Нұрланды 0,5 м жолда бірқалыпты кемімелі тоқтатса, оның үдеуі қандай?',pre:'a = ',a:400,unit:'м/с²',hint:'a = v² / (2s)',sol:'a = 20² / (2·0,5) = 400 м/с². Белдіксіз орындыққа соғылса, ~5 см-де тоқтайды: a ≈ 4000 м/с² — 10 есе көп!'},
+ {q:'Тұрған көлікке артынан басқа көлік соғылды. Жолаушының мойнын не қорғайды?',ch:['Қауіпсіздік белдігі','Орындықтың бас сүйеніші','Алдыңғы әуе жастығы'],a:1,sol:'Орындық денені алға итереді, ал бас инерция бойынша орнында қалып, артқа шалқаяды — бас сүйеніш оны ұстап қалады.'}];
+function flScore(){var g=0,d=0;FL.items.forEach(function(s){if(s.done)d++;if(s.got)g++;});$('flSc').innerHTML=d?'Дұрыс жауап: <b>'+g+'</b> / 4':'';}
+FLQ.forEach(function(o,i){o.cls='fl-q';o.head=(i+1)+'-сұрақ';o.pts=1;FL.items.push(mkTask($('flQs'),o,flScore));});
+
+/* ===== Сергіту сәті: Инерция дуэлі ===== */
+var DUQ=[
+ ['Кілт тежелген автобустағы жолаушы қай жаққа ауады?','Алға','Артқа','Оңға'],
+ ['Автобус орнынан кілт қозғалғанда жолаушы қай жаққа ауады?','Артқа','Алға','Солға'],
+ ['Дененің инерттілігінің өлшемі —','масса','жылдамдық','үдеу'],
+ ['F<sub>R</sub> = 0 болса, қозғалыстағы дене…','v = const сақтайды','міндетті түрде тоқтайды','үдей бастайды'],
+ ['Қай санақ жүйесі инерциялық емес?','Тежеліп келе жатқан пойыз','Бірқалыпты жүзген кеме','Жердегі ғимарат'],
+ ['Инерция құбылысын тәжірибе арқылы алғаш зерттеген ғалым','Галилей','Аристотель','Архимед'],
+ ['Кілемді таяқпен қаққанда шаң неге ұшады?','Шаң тыныштықта қалады','Таяқ шаңды тартады','Шаң ауырлап кетеді'],
+ ['Бірдей жылдамдықта қайсысын тоқтату қиын?','Жүк көлігін','Велосипедті','Екеуі бірдей'],
+ ['Ғарышта зымыранның қозғалтқышы сөнсе, ол…','бірқалыпты ұша береді','бірден тоқтайды','кері қайтады'],
+ ['Дымқыл күртешені сілкігенде су тамшылары неге ұшады?','Инерциямен қозғала береді','Күртеше оларды итереді','Ауа оларды тартады'],
+ ['Жүгіріп келе жатып сүрінген адам қай жаққа құлайды?','Алға','Артқа','Орнында тұрады'],
+ ['Мұзда тайғанаған адам қай жаққа құлайды?','Артқа','Алға','Оңға'],
+ ['Көлік бірқалыпты жүреді, тарту күші 2 кН. Кедергі күші қандай?','2 кН','0','4 кН'],
+ ['Үстелдегі тыныштықтағы кітапқа әсер ететін күштер…','mg мен N теңгеріледі','тек mg әсер етеді','ешқандай күш жоқ'],
+ ['Парашютші тұрақты жылдамдықпен түседі. Тең әсерлі күш…','нөлге тең','төмен бағытталған','жоғары бағытталған'],
+ ['Көлік оңға кілт бұрылса, жолаушы қай жаққа ауады?','Солға','Оңға','Артқа'],
+ ['Тиын стақанға түсуі үшін карточканы…','жылдам шерту керек','баяу тарту керек','жоғары көтеру керек'],
+ ['Инерция дегеніміз —','жылдамдықтың сақталуы','күштің артуы','массаның азаюы'],
+ ['Мұз бетіндегі шайба неге алысқа сырғанайды?','Үйкеліс аз','Массасы аз','Мұз оны итереді'],
+ ['Ньютонның І заңы қандай санақ жүйесінде орындалады?','Инерциялық','Кез келген','Үдемелі'],
+ ['Қайсысының инерттілігі үлкен: 1 кг мақта ма, 1 кг темір ме?','Бірдей','Темір','Мақта'],
+ ['Жаңбыр тамшысы тұрақты жылдамдықпен түседі. mg мен F<sub>кедергі</sub>…','тең','mg үлкен','F<sub>кедергі</sub> үлкен'],
+ ['Балтаны сапқа қондыру үшін…','саптың ұшын бөренеге ұрады','балтаның жүзін ұрады','сапты ортасынан ұрады'],
+ ['Дастарқанды жылдам жұлғанда ыдыстар…','орнында қалады','бірге кетеді','секіріп түседі']];
+var DU={bag:[],q:null,n:0,N:10,s:[0,0],lock:[false,false],busy:false,on:false,tm:0};
+function shuf(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function duScore(p,pop){var b=$('duS'+(p+1));b.textContent=DU.s[p];if(pop){b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}}
+function duShow(){each(document.querySelectorAll('.du-b'),function(b){if(b.getAttribute('data-k')==='1')b.classList.add('du-ok');});}
+function duNext(){clearTimeout(DU.tm);if(!DU.on)return;if(DU.n>=DU.N){duEnd();return;}
+ if(!DU.bag.length)DU.bag=shuf(DUQ.slice());DU.q=DU.bag.pop();DU.n++;DU.lock=[false,false];DU.busy=false;
+ $('duQ').innerHTML='<small>Сұрақ '+DU.n+' / '+DU.N+'</small>'+DU.q[0];
+ [0,1].forEach(function(p){var P=$('duP'+(p+1)),box=P.querySelector('.du-op');P.classList.remove('du-win','du-lock');box.innerHTML='';
+  shuf([1,2,3]).forEach(function(k){var b=document.createElement('button');b.className='du-b';b.innerHTML=DU.q[k];b.setAttribute('data-k',k);
+   var hit=function(e){e.preventDefault();duTap(p,k,b);};
+   if(window.PointerEvent)b.addEventListener('pointerdown',hit);else{b.addEventListener('touchstart',hit);b.addEventListener('mousedown',hit);}box.appendChild(b);});});}
+function duTap(p,k,b){if(!DU.on||DU.busy||DU.lock[p])return;
+ if(k===1){DU.busy=true;DU.s[p]++;duScore(p,true);$('duP'+(p+1)).classList.add('du-win');duShow();SND.ok();DU.tm=setTimeout(duNext,1700);}
+ else{DU.lock[p]=true;b.classList.add('du-no');$('duP'+(p+1)).classList.add('du-lock');SND.bad();if(DU.lock[0]&&DU.lock[1]){DU.busy=true;duShow();DU.tm=setTimeout(duNext,2200);}}}
+function duEnd(){DU.on=false;var a=DU.s[0],b=DU.s[1];$('duQ').innerHTML='<small>Ойын аяқталды · '+a+' : '+b+'</small>'+(a===b?'🤝 Тең ойын! Екеуіңе де рақмет!':'🏆 '+(a>b?'1':'2')+'-ойыншы жеңді!');
+ if(a!==b)$('duP'+(a>b?1:2)).classList.add('du-win');SND.ok();}
+$('duGo').onclick=function(){DU.s=[0,0];DU.n=0;DU.on=true;duScore(0);duScore(1);$('duGo').textContent='↺ Қайта бастау';duNext();};
+$('duNx').onclick=function(){if(DU.on)duNext();};
+
+/* ===== Деңгейлік тапсырмалар ===== */
+var LVT={
+ A:[{q:'Дененің инерттілігінің өлшемі қандай физикалық шама?',ch:['Жылдамдық','Масса','Үдеу','Жол'],a:1},
+  {q:'Денеге әсер ететін тең әсерлі күш нөлге тең (F<sub>R</sub> = 0). Дене қалай қозғалады?',ch:['Міндетті түрде тоқтайды','Үдемелі қозғалады','Тыныштықта тұрады немесе бірқалыпты түзу сызықты қозғалады','Шеңбер бойымен қозғалады'],a:2},
+  {q:'Қай санақ жүйесі инерциялық емес?',ch:['Жер бетіндегі ғимарат','Бірқалыпты жүріп келе жатқан пойыз','Аялдамаға жақындап тежеліп келе жатқан автобус','Тұрақты жылдамдықпен жүзген теплоход'],a:2},
+  {q:'Кілемді таяқпен қаққанда шаң одан неге бөлінеді?',ch:['Кілем қозғалады, ал шаң инерция бойынша орнында қалады','Шаңды ауа ағыны үрлеп әкетеді','Таяқ шаңды өзіне тартады','Шаңның массасы кілемнен үлкен'],a:0}],
+ B:[{q:'Автокөлік түзу жолмен бірқалыпты қозғалып келеді. Қозғалтқыштың тарту күші 1,2 кН. Үйкеліс пен ауа кедергісінің қосынды күші неге тең?',pre:'F = ',a:1200,unit:'Н',hint:'v = const ⇒ күштер теңгерілген',sol:'F<sub>кед</sub> = F<sub>тарту</sub> = 1200 Н'},
+  {q:'Массасы 50 кг жәшік еденде тыныштықта тұр. Еденнің тірек реакция күші қандай?',pre:'N = ',a:500,unit:'Н',hint:'N = mg',sol:'N = mg = 50 · 10 = 500 Н'},
+  {q:'Парашютші парашютімен бірге 80 кг. Ол тұрақты жылдамдықпен түсіп келеді. Ауаның кедергі күші қандай?',pre:'F = ',a:800,unit:'Н',hint:'v = const ⇒ F<sub>кед</sub> = mg',sol:'F<sub>кед</sub> = mg = 80 · 10 = 800 Н'},
+  {q:'Автобус 54 км/сағ жылдамдықпен келе жатып кілт тежелді. Тұрған жолаушы инерция бойынша сол жылдамдықпен алға қарай 0,3 м ығысты. Бұл қанша уақытқа созылды?',pre:'t = ',a:.02,unit:'с',hint:'54 км/сағ = 15 м/с; t = s / v',sol:'t = 0,3 / 15 = 0,02 с'}],
+ C:[{q:'Бала массасы 40 кг жүк тиелген шананы мұз бетімен бірқалыпты сүйреп келеді. Шана мен мұздың үйкеліс коэффициенті μ = 0,05.',parts:[
+   {q:'а) Тірек реакция күші қандай?',pre:'N = ',a:400,unit:'Н',hint:'N = mg',sol:'N = 40 · 10 = 400 Н'},
+   {q:'б) Баланың тарту күші қандай?',pre:'F = ',a:20,unit:'Н',hint:'F = F<sub>үйк</sub> = μN',sol:'F = μN = 0,05 · 400 = 20 Н'}]},
+  {q:'Массасы 0,5 кг кітап үстелде жатыр. Кітап пен үстелдің үйкеліс коэффициенті μ = 0,3.',parts:[
+   {q:'а) Кітапты бірқалыпты сүйреу үшін қандай горизонталь күш керек?',pre:'F = ',a:1.5,unit:'Н',hint:'F = μmg',sol:'F = 0,3 · 0,5 · 10 = 1,5 Н'},
+   {q:'б) Кітапты 1 Н күшпен тартқанда ол орнынан қозғалмады. Тыныштық үйкеліс күші неге тең?',pre:'F<sub>үйк</sub> = ',a:1,unit:'Н',hint:'Кітап тыныштықта ⇒ күштер теңгерілген',sol:'Күштер теңгерілген: F<sub>үйк</sub> = 1 Н (1 Н < 1,5 Н, сондықтан кітап қозғалмайды)'}]}]};
+var LV={items:[]};
+function lvBuild(){LV.items=[];['A','B','C'].forEach(function(L){var box=$('lv'+L);box.innerHTML='';
+ LVT[L].forEach(function(o,i){
+  if(o.parts){var card=document.createElement('div');card.className='lv-t';card.innerHTML='<div class="tn">C'+(i+1)+' · 4 балл</div><div class="tq">'+o.q+'</div>';box.appendChild(card);
+   o.parts.forEach(function(p){p.cls='lv-sub';p.pts=2;LV.items.push(mkTask(card,p,lvScore));});}
+  else{o.cls='lv-t';o.pts=L==='A'?1:2;o.head=L+(i+1)+' · '+o.pts+' балл';LV.items.push(mkTask(box,o,lvScore));}});});
+ lvScore(true);}
+function lvScore(quiet){var g=0,d=0;LV.items.forEach(function(s){g+=s.got;if(s.done)d++;});var all=d===LV.items.length,mk=g>=18?5:g>=14?4:g>=9?3:2;
+ $('lvSc').innerHTML='Балл: <b>'+g+'</b> / 20 · орындалды '+d+'/'+LV.items.length+(all?' · Баға: <b class="lv-mk">«'+mk+'»</b>':'');
+ if(all&&quiet!==true)toast('Барлық тапсырма орындалды! Баға: «'+mk+'»');}
+each(document.querySelectorAll('.lv-tab'),function(b){b.onclick=function(){var L=b.getAttribute('data-lv');
+ each(document.querySelectorAll('.lv-tab'),function(x){x.classList.toggle('on',x===b);});each(document.querySelectorAll('.lv-pane'),function(p){p.classList.toggle('on',p.id==='lv'+L);});SND.tick();};});
+$('lvRe').onclick=function(){lvBuild();toast('Тапсырмалар қайта басталды');};lvBuild();
+
+/* ===== Тақта ===== */
+var cur=0;
+var board=(function(){var cv=$('ink'),ctx=cv.getContext('2d'),ink=store.get('n1_ink',{}),color='#f2efe2',width=3.8,eraser=false,curS=null,saveT;
+ function list(){if(!ink[cur])ink[cur]=[];return ink[cur];}
+ function resize(){var r=cv.getBoundingClientRect();if(!r.width)return;var k=window.devicePixelRatio||1;cv.width=Math.round(r.width*k);cv.height=Math.round(r.height*k);redraw();}
+ function seg(s,i){var W=cv.width,H=cv.height,p=s.p,base=s.w*W/520;ctx.globalCompositeOperation=s.e?'destination-out':'source-over';ctx.strokeStyle=s.c;ctx.lineCap='round';ctx.lineJoin='round';
+  if(i===0){ctx.lineWidth=base*(.6+p[0][2]*.8);ctx.beginPath();ctx.moveTo(p[0][0]*W,p[0][1]*H);ctx.lineTo(p[0][0]*W+.1,p[0][1]*H);ctx.stroke();return;}
+  var a=p[i-1],b=p[i],z=p[i-2]||a;ctx.lineWidth=base*(.6+b[2]*.8);ctx.beginPath();ctx.moveTo((z[0]+a[0])/2*W,(z[1]+a[1])/2*H);ctx.quadraticCurveTo(a[0]*W,a[1]*H,(a[0]+b[0])/2*W,(a[1]+b[1])/2*H);ctx.stroke();}
+ function redraw(){ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,cv.width,cv.height);var l=list();for(var j=0;j<l.length;j++)for(var i=0;i<l[j].p.length;i++)seg(l[j],i);ctx.globalCompositeOperation='source-over';}
+ function save(){clearTimeout(saveT);saveT=setTimeout(function(){store.set('n1_ink',ink);},400);}
+ function pt(e){var r=cv.getBoundingClientRect();return[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height,e.pointerType==='pen'?(e.pressure||.5):.5];}
+ if(window.PointerEvent){cv.addEventListener('pointerdown',function(e){if(e.button>0&&e.pointerType==='mouse')return;try{cv.setPointerCapture(e.pointerId);}catch(x){}curS={c:color,w:eraser?width*5:width,e:eraser,p:[pt(e)]};list().push(curS);seg(curS,0);e.preventDefault();});
+  cv.addEventListener('pointermove',function(e){if(!curS)return;var evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];for(var i=0;i<evs.length;i++){curS.p.push(pt(evs[i]));seg(curS,curS.p.length-1);}});
+  var end=function(){if(curS){curS=null;ctx.globalCompositeOperation='source-over';save();}};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);}
+ else{cv.addEventListener('touchstart',function(e){var t=e.changedTouches[0];curS={c:color,w:eraser?width*5:width,e:eraser,p:[pt(t)]};list().push(curS);seg(curS,0);e.preventDefault();});
+  cv.addEventListener('touchmove',function(e){if(!curS)return;var t=e.changedTouches[0];curS.p.push(pt(t));seg(curS,curS.p.length-1);e.preventDefault();});
+  cv.addEventListener('touchend',function(){curS=null;save();});
+  cv.addEventListener('mousedown',function(e){curS={c:color,w:eraser?width*5:width,e:eraser,p:[pt(e)]};list().push(curS);seg(curS,0);});
+  cv.addEventListener('mousemove',function(e){if(!curS)return;curS.p.push(pt(e));seg(curS,curS.p.length-1);});document.addEventListener('mouseup',function(){if(curS){curS=null;save();}});}
+ each(document.querySelectorAll('.sw'),function(b){b.onclick=function(){color=b.getAttribute('data-c');eraser=false;$('erase').classList.remove('on');each(document.querySelectorAll('.sw'),function(x){x.classList.toggle('on',x===b);});};});
+ each(document.querySelectorAll('[data-w]'),function(b){b.onclick=function(){width=+b.getAttribute('data-w');each(document.querySelectorAll('[data-w]'),function(x){x.classList.toggle('on',x===b);});};});
+ $('erase').onclick=function(){eraser=!eraser;$('erase').classList.toggle('on',eraser);};
+ function undo(){list().pop();redraw();save();}$('undo').onclick=undo;
+ $('wipe').onclick=function(){if(!list().length)return;ink[cur]=[];redraw();save();toast('Осы беттегі жазба тазаланды');};
+ return{resize:resize,redraw:redraw,undo:undo};})();
+function setBoard(open){$('stage').classList.toggle('noboard',!open);store.set('n1_board',open);$('bdT').textContent=open?'✎ Тақтаны жинау':'✎ Тақтаны ашу';setTimeout(function(){board.resize();},40);}
+$('bdT').onclick=function(){setBoard($('stage').classList.contains('noboard'));};$('bdClose').onclick=function(){setBoard(false);};$('bdOpen').onclick=function(){setBoard(true);};
+
+/* ===== Стоп-кадр объектілері ===== */
+FZ.intro=new Freezer('bIntro');FZ.gal=new Freezer('bGal');FZ.coin=new Freezer('bCoin');FZ.cart=new Freezer('bCart');FZ.bus=new Freezer('bBus');FZ.space=new Freezer('bSpace');FZ.train=new Freezer('bTrain');FZ.bal=new Freezer('bBal');FZ.eag=new Freezer('bEag');FZ.sl=new Freezer('bSl');FZ.wl=new Freezer('bWl');
+
+/* ===== Навигация ===== */
+var slides=document.querySelectorAll('.slide');
+each(slides,function(s,i){var b=document.createElement('button');b.className='dot';b.textContent=i+1;b.title=s.getAttribute('data-title');b.onclick=function(){go(i);};$('dots').appendChild(b);});
+function go(i){i=clamp(i,0,slides.length-1);if(i!==cur)SND.page();slides[cur].classList.remove('on');cur=i;var s=slides[cur];s.classList.add('on');
+ $('stitle').textContent=s.getAttribute('data-title');$('bhint').textContent=s.getAttribute('data-hint')||'';
+ each($('dots').children,function(d,j){d.classList.toggle('on',j===cur);});$('cnt').textContent=(cur+1)+' / '+slides.length;store.set('n1_slide',cur);setTimeout(function(){board.resize();},30);}
+$('prev').onclick=function(){go(cur-1);};$('next').onclick=function(){go(cur+1);};
+document.addEventListener('keydown',function(e){var tg=document.activeElement&&document.activeElement.tagName;if(tg==='INPUT')return;var k=e.keyCode;
+ if(e.ctrlKey&&k===90){board.undo();e.preventDefault();return;}if(k===39||k===34){go(cur+1);e.preventDefault();}else if(k===37||k===33){go(cur-1);e.preventDefault();}else if(k===70)toggleFS();});
+function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement;}
+function toggleFS(){var d=document.documentElement;try{if(!fsEl()){var f=d.requestFullscreen||d.webkitRequestFullscreen;var r=f.call(d);if(r&&r['catch'])r['catch'](function(){toast('F11 пернесін басыңыз');});}else{(document.exitFullscreen||document.webkitExitFullscreen).call(document);}}catch(e){toast('F11 пернесін басыңыз');}}
+function fsLab(){var t=fsEl()?'✕ Толық экраннан шығу':'⛶ Толық экран';$('fs').textContent=t;$('fsTop').textContent=t;each(document.querySelectorAll('.fsb'),function(b){b.textContent=t;});}
+document.addEventListener('fullscreenchange',fsLab);document.addEventListener('webkitfullscreenchange',fsLab);
+$('fs').onclick=toggleFS;$('fsTop').onclick=toggleFS;
+$('snd').onclick=function(){$('snd').textContent=SND.toggle()?'🔊':'🔇';};$('snd').textContent=SND.isOn()?'🔊':'🔇';
+var SCALE=1;function fit(){SCALE=Math.min(innerWidth/1600,innerHeight/900);$('stage').style.transform='translate('+((innerWidth-1600*SCALE)/2)+'px,'+((innerHeight-900*SCALE)/2)+'px) scale('+SCALE+')';
+ $('stage').style.webkitTransform=$('stage').style.transform;board.resize();}
+window.addEventListener('resize',fit);
+setBoard(store.get('n1_board',true));fit();
+var hm=/^#(\d+)$/.exec(location.hash);go(hm?(+hm[1]-1):Math.min(store.get('n1_slide',0),slides.length-1));
+window.addEventListener('hashchange',function(){var m=/^#(\d+)$/.exec(location.hash);if(m)go(+m[1]-1);});
+var prevT=0;
+function loop(now){var dt=prevT?Math.min(.05,(now-prevT)/1000):0;prevT=now;TT+=dt;
+ each(slides[cur].querySelectorAll('canvas.lab'),function(cv){var L=LAB[cv.id];if(!L)return;FLBG='rgba(255,255,255,.75)';var w=cv.clientWidth,h=cv.clientHeight;if(!w)return;var k=Math.max(1,(window.devicePixelRatio||1)*SCALE);
+  var W=Math.round(w*k),H=Math.round(h*k);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}var c=cv.getContext('2d');c.setTransform(k,0,0,k,0,0);L(c,w,h,dt);});
+ each(slides[cur].querySelectorAll('[data-tick]'),function(el){var f=TICK[el.getAttribute('data-tick')];if(f)f(dt);});
+ requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
